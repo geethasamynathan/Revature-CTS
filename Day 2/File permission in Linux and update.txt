@@ -1,0 +1,123 @@
+
+Add users
+
+
+check the permissions for your folder  for that user. 
+
+if you don/t have permission to access the folder
+
+Set the permission
+sudo setfacl -m u:opsuser1:--x /home/admin1
+ 
+check the permission 
+getfacl /home/admin1
+getfacl /home/admin1/projects/
+getfacl /home/admin1/projects/dev_team_project
+
+switch from admin to opsuser
+=============================
+su opsuser1
+
+
+echo "ops update" >>/home/admin1/projects/dev_team_project/log3.txt
+
+ cat /home/admin1/projects/dev_team_project/log3.txt
+
+cat > app.log << 'EOF'
+2025-12-15 09:00:01 INFO  User login success user=rahul ip=10.0.0.11
+2025-12-15 09:01:20 WARN  Slow query user=sonali ip=10.0.0.12 ms=2400
+2025-12-15 09:02:10 ERROR DB connection failed user=rahul ip=10.0.0.11 code=DB100
+2025-12-15 09:03:40 INFO  Order placed user=arjun ip=10.0.0.13 amount=499
+2025-12-15 09:04:15 ERROR Payment failed user=sonali ip=10.0.0.12 code=PAY200
+2025-12-15 09:05:05 INFO  User logout user=rahul ip=10.0.0.11
+2025-12-15 09:06:30 WARN  API timeout user=arjun ip=10.0.0.13 ms=5200
+2025-12-17 09:07:00 ERROR API returned 500 user=arjun ip=10.0.0.13 code=API500
+EOF
+
+
+
+
+cat > access.log << 'EOF'
+10.0.0.11 - - [15/Dec/2025:09:00:01 +0530] "GET /login HTTP/1.1" 200 123
+10.0.0.12 - - [15/Dec/2025:09:01:20 +0530] "GET /products HTTP/1.1" 200 533
+10.0.0.11 - - [15/Dec/2025:09:02:10 +0530] "POST /pay HTTP/1.1" 500 321
+10.0.0.13 - - [15/Dec/2025:09:03:40 +0530] "GET /orders HTTP/1.1" 200 444
+10.0.0.12 - - [15/Dec/2025:09:04:15 +0530] "POST /pay HTTP/1.1" 502 311
+10.0.0.13 - - [15/Dec/2025:09:06:30 +0530] "GET /status HTTP/1.1" 200 88
+10.0.0.13 - - [15/Dec/2025:09:07:00 +0530] "GET /status HTTP/1.1" 500 88
+EOF
+
+
+cat > sales.csv << 'EOF'
+order_id,customer,city,amount,status
+O1001,Rahul,Chennai,499,PAID
+O1002,Sonali,Bengaluru,1200,FAILED
+O1003,Arjun,Hyderabad,799,PAID
+O1004,Rahul,Chennai,1500,PAID
+O1005,Sonali,Bengaluru,300,FAILED
+EOF
+
+
+
+
+ grep "ERROR" app.log
+
+ grep "ERROR" app.log | tail -n 1
+grep "ERROR" app.log | grep -o "code=[A-Z0-9]*" |sort |uniq
+
+$ grep "ERROR" app.log | grep -o "code=[A-Z0-9]*"
+
+ grep "ERROR" app.log | grep -o "code=[a-z0-9]*"
+
+grep "ERROR" app.log | grep -o "code=[A-Z0-2]*"
+
+awk -F'"' '{print $2}' access.log |awk '{print $2}'
+
+
+
+
+ echo "2025-12-17 09:07:00 ERROR API returned 500 user=arjun ip=10.0.0.13 code=API500" >> a
+pp.log
+
+grep "ERROR" app.log | grep -o "code=[A-Z0-2]*" |sort | uniq
+
+grep "ERROR" app.log | grep -o "code=[A-Z0-9]*" |sort | uniq
+
+ grep "ERROR" app.log | grep -o "code=[A-Z0-9]*" |sort |uniq -c
+
+ grep "ERROR" app.log | grep -o "code=[A-Z0-9]*" |sort |uniq -c | sort -nr
+
+$ grep "ERROR" app.log | grep -o "code=[A-Z0-9]*" |sort |uniq -c | sort -n
+
+ cut -d ' ' -f1 access.log |sort
+
+grep -E ' (500|502)' access.log | awk '{print $9}' |sort |uniq -c | sort -nr
+
+ tail -f app.log | grep --line-buffered "ERROR"
+
+
+cat sales.csv
+
+cut -d ',' -f3 sales.csv |tail -n +2 | tr 'a-z' 'A-Z'
+
+cut -d ',' -f3 sales.csv |tail -n +2
+
+
+ cut -d ',' -f3 sales.csv |tail -n +1 |sort
+
+
+
+tail -n +2 sales.csv |grep ",PAID$" | awk -F',' '{sum+=$4} END {print sum}'
+
+
+
+
+
+
+
+
+
+
+
+
+
