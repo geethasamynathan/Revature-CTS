@@ -111,12 +111,85 @@ tail -n +2 sales.csv |grep ",PAID$" | awk -F',' '{sum+=$4} END {print sum}'
 
 
 
+Process management
+==================
+ps
+
+ps -f 1
+
+exec ls -l
+
+ps f
+
+sleep 1
+sleep 15
+
+
+sleep 30 &
+
+ps
+
+it won't display anything as it is in sleep for 30 sec. After 30 sec you can   get th list
 
 
 
 
 
+sleep 100 &
 
+sleep 101 &
+sleep 102 &
+
+jobs
+
+Open another terminal 
+
+kill -l
+
+ps -ax | grep sleep
+
+
+ kill -15  666
+
+Check it i another   terminal  
+jobs
+
+
+kill -STOP 748		
+
+another terminal 
+jobs
+
+kill -CONT 748
+
+in another terminal
+jobs
+
+
+network communication utilities:
+==================================
+ifconfig
+
+
+ip -4 addr
+
+ip -6 addr
+
+
+netstat
+
+
+netstat -a
+
+netstat -at
+
+netstat -l
+
+
+netstat -u
+
+curl
+=====
 
 
 
