@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <pre>
+  <form id="loginform" novalidate>
+    <fieldset>
+        <legend>Login Form</legend>
+    <label for="txtUsername">Username</label>
+    <input
+      type="text"
+      id="txtUsername"
+      name="txtUsername"
+      placeholder="testuser"
+      required
+    /><br/>
+    <label for="txtPassword">Password</label>
+    <input
+      type="password"
+      id="txtPassword"
+      name="txtPassword"
+      placeholder="Enter your password"
+      required
+    /><br/>
+    <button type="button" id="btnSubmit" onclick="validate()">Login</button> &nbsp;&nbsp;  
+      <button type="reset" id="btnCancel">Cancel</button>
+    <!-- <button typ="button" id="btnCancel">Cancel</button> -->
+     </fieldset>
+  </form>
+  </pre>
+
+    <div id="heading" onclick="changediv()">sample div</div>
+    <script>
+      function changediv() {
+        // console.log("sample text");
+        divContent = document.getElementById("heading").innerText;
+        console.log(divContent);
+        document.getElementById("heading").innerText =
+          "Sample Form with Script tags";
+      }
+      function validate() {
+        // console.log("function called");
+        var username = document.getElementById("txtUsername").value;
+        var password = document.getElementById("txtPassword").value;
+        if (username.length == 0 && password.length == 0) {
+          alert("Enter the username and password");
+        } else if (username.length == 0 && password.length > 0) {
+          alert("Enter the username");
+        } else if (password.length == 0 && username.length > 0) {
+          alert("Enter the password");
+        } else if (username.length > 0 && password.length) {
+          if (username == "testuser" && password == "testpassword") {
+            alert("Login success");
+          } else {
+            alert("Invalid credentials");
+          }
+        }
+        // console.log(`uname = ${username} - ${password}`);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML5 Forms — Login + Registration (All Elements)</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --card: #fff;
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --brand: #0b6a3c;
+        --brand2: #14532d;
+        --warn: #b45309;
+        --danger: #b91c1c;
+        --ok: #166534;
+        --shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+        --r: 14px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, Segoe UI, Arial;
+        background: var(--bg);
+        color: var(--text);
+      }
+      header {
+        background: var(--brand);
+        color: #fff;
+        padding: 18px 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 18px;
+      }
+      header p {
+        margin: 6px 0 0;
+        opacity: 0.9;
+        font-size: 13px;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 18px auto;
+        padding: 0 16px;
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+      }
+      @media (min-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0 0 14px;
+      }
+      fieldset {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 0 0 12px;
+      }
+      legend {
+        padding: 0 8px;
+        color: var(--brand2);
+        font-weight: 700;
+        font-size: 13px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin: 10px 0 6px;
+      }
+      .help {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .row {
+        display: grid;
+        gap: 12px;
+      }
+      @media (min-width: 520px) {
+        .row.two {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fff;
+        font-size: 14px;
+        outline: none;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #86efac;
+        box-shadow: 0 0 0 4px rgba(134, 239, 172, 0.25);
+      }
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+      .inline {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      .inline label {
+        margin: 0;
+        font-weight: 600;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+      button {
+        border: 0;
+        padding: 10px 14px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .primary {
+        background: var(--brand);
+        color: #fff;
+      }
+      .primary:hover {
+        filter: brightness(0.95);
+      }
+      .ghost {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .danger {
+        background: #fee2e2;
+        color: #7f1d1d;
+      }
+      .note {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        border-radius: 12px;
+        padding: 10px;
+        font-size: 13px;
+        color: #7c2d12;
+        margin-top: 12px;
+      }
+      .validHint {
+        font-size: 12px;
+        margin-top: 6px;
+      }
+      .validHint.ok {
+        color: var(--ok);
+      }
+      .validHint.bad {
+        color: var(--danger);
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .kv div {
+        padding: 8px 10px;
+        border: 1px dashed var(--border);
+        border-radius: 12px;
+        background: #f9fafb;
+        font-size: 13px;
+      }
+      progress {
+        width: 100%;
+        height: 14px;
+      }
+      meter {
+        width: 100%;
+        height: 16px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="topbar">
+        <div>
+          <h1>HTML5 Forms — Login + Registration (All Form Elements)</h1>
+        </div>
+        <div class="mini">
+          Open DevTools → Console to see submitted data (demo only)
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="grid">
+        <!-- LOGIN FORM -->
+        <section class="card">
+          <h2>✅ Real-world Login Form</h2>
+          <p class="sub">
+            Uses: form, label, input(email/password), checkbox, button, small
+            help text, autocomplete
+          </p>
+
+          <form id="loginForm" action="#" method="post" novalidate>
+            <fieldset>
+              <legend>Sign In</legend>
+
+              <label for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+                aria-describedby="loginEmailHelp"
+              />
+              <div class="help" id="loginEmailHelp">
+                Use your work email address.
+              </div>
+
+              <label for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+                minlength="6"
+                required
+                aria-describedby="loginPassHelp"
+              />
+              <div class="help" id="loginPassHelp">Minimum 6 characters.</div>
+
+              <div class="inline">
+                <span class="chip">
+                  <input id="rememberMe" name="rememberMe" type="checkbox" />
+                  <label for="rememberMe">Remember me</label>
+                </span>
+
+                <span class="chip">
+                  <input id="showLoginPass" type="checkbox" />
+                  <label for="showLoginPass">Show password</label>
+                </span>
+              </div>
+
+              <div class="btns">
+                <button class="primary" type="submit">Sign In</button>
+                <button class="ghost" type="reset">Reset</button>
+              </div>
+
+              <div class="note">
+                <strong>UX tip:</strong> Login should ask only what’s needed:
+                email + password. Keep it short.
+              </div>
+            </fieldset>
+          </form>
+        </section>
+
+        <!-- REGISTRATION FORM -->
+        <section class="card">
+          <h2>
+            🧾 Real-world Registration Form (covers ALL major HTML5 form
+            elements)
+          </h2>
+          <p class="sub">
+            Includes: fieldset/legend, input types, select+optgroup, datalist,
+            textarea, file, range, color, date/time, output, progress, meter
+          </p>
+
+          <form
+            id="regForm"
+            action="#"
+            method="post"
+            enctype="multipart/form-data"
+            novalidate
+          >
+            <fieldset>
+              <legend>Personal Info</legend>
+
+              <div class="row two">
+                <div>
+                  <label for="fullName">Full Name</label>
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    placeholder="Gopi Suresh"
+                    autocomplete="name"
+                    required
+                    minlength="3"
+                  />
+                  <div class="help">
+                    As per your government ID (for invoices).
+                  </div>
+                </div>
+
+                <div>
+                  <label for="phone">Mobile Number</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    placeholder="98765 43210"
+                    autocomplete="tel"
+                    pattern="^[6-9]\d{9}$"
+                    required
+                    aria-describedby="phoneHelp"
+                  />
+                  <div class="help" id="phoneHelp">
+                    India format (10 digits). Example: 9876543210
+                  </div>
+                </div>
+              </div>
+
+              <div class="row two">
+                <div>
+                  <label for="dob">Date of Birth</label>
+                  <input id="dob" name="dob" type="date" required />
+                  <div class="help">Used for age verification.</div>
+                </div>
+
+                <div>
+                  <label for="favColor">Theme Color</label>
+                  <input
+                    id="favColor"
+                    name="favColor"
+                    type="color"
+                    value="#0b6a3c"
+                  />
+                  <div class="help">Personalize your dashboard.</div>
+                </div>
+              </div>
+
+              <label for="about">About You</label>
+              <textarea
+                id="about"
+                name="about"
+                placeholder="Tell us your goal (UI/UX, front-end, full stack...)"
+              ></textarea>
+            </fieldset>
+
+            <fieldset>
+              <legend>Account Details</legend>
+
+              <label for="regEmail">Email</label>
+              <input
+                id="regEmail"
+                name="regEmail"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+              />
+
+              <label for="newPassword">Create Password</label>
+              <input
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+                aria-describedby="passRules"
+              />
+              <div class="help" id="passRules">
+                8+ chars; include at least 1 number for better security.
+              </div>
+
+              <!-- meter + output -->
+              <div class="help">Password strength:</div>
+              <meter
+                id="passMeter"
+                min="0"
+                max="100"
+                low="35"
+                high="70"
+                optimum="90"
+                value="0"
+              ></meter>
+              <div class="validHint" id="passText">
+                Score: <output id="passScore">0</output>/100
+              </div>
+
+              <div class="inline">
+                <span class="chip">
+                  <input id="showRegPass" type="checkbox" />
+                  <label for="showRegPass">Show password</label>
+                </span>
+              </div>
+
+              <label for="role">Role</label>
+              <select id="role" name="role" required>
+                <option value="" selected disabled>Select your role</option>
+                <optgroup label="Learner">
+                  <option value="student">Student</option>
+                  <option value="fresher">Fresher</option>
+                </optgroup>
+                <optgroup label="Professional">
+                  <option value="developer">Developer</option>
+                  <option value="tester">Tester</option>
+                  <option value="designer">UI/UX Designer</option>
+                </optgroup>
+              </select>
+
+              <!-- datalist -->
+              <label for="city">City (with suggestions)</label>
+              <input
+                id="city"
+                name="city"
+                list="cityList"
+                placeholder="Start typing (Chennai, Coimbatore...)"
+              />
+              <datalist id="cityList">
+                <option value="Chennai"></option>
+                <option value="Coimbatore"></option>
+                <option value="Bengaluru"></option>
+                <option value="Hyderabad"></option>
+                <option value="Mumbai"></option>
+                <option value="Delhi"></option>
+              </datalist>
+              <div class="help">
+                Datalist gives suggestions but still allows any value.
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferences & Proof</legend>
+
+              <label>Learning Mode</label>
+              <div class="inline">
+                <span class="chip">
+                  <input
+                    id="modeLive"
+                    name="mode"
+                    type="radio"
+                    value="live"
+                    required
+                  />
+                  <label for="modeLive">Live</label>
+                </span>
+                <span class="chip">
+                  <input id="modeSelf" name="mode" type="radio" value="self" />
+                  <label for="modeSelf">Self-paced</label>
+                </span>
+              </div>
+
+              <label for="newsletter">Newsletter</label>
+              <div class="inline">
+                <span class="chip">
+                  <input
+                    id="newsletter"
+                    name="newsletter"
+                    type="checkbox"
+                    checked
+                  />
+                  <label for="newsletter">Send me updates</label>
+                </span>
+              </div>
+
+              <label for="exp">Experience Level (Range)</label>
+              <input
+                id="exp"
+                name="exp"
+                type="range"
+                min="0"
+                max="10"
+                value="2"
+                step="1"
+              />
+              <div class="help">0 = Beginner, 10 = Expert</div>
+              <div class="validHint">
+                Selected: <output id="expOut">2</output>/10
+              </div>
+
+              <label for="resume">Upload Resume (PDF)</label>
+              <input id="resume" name="resume" type="file" accept=".pdf" />
+              <div class="help">
+                Optional. Helps trainers understand your profile.
+              </div>
+
+              <label for="wakeTime">Preferred Class Time</label>
+              <input id="wakeTime" name="wakeTime" type="time" />
+            </fieldset>
+
+            <!-- progress demo -->
+            <fieldset>
+              <legend>Demo Progress (UI only)</legend>
+              <div class="help">Simulated “profile completion” progress:</div>
+              <progress id="profileProg" value="20" max="100"></progress>
+              <div class="validHint">
+                Completion: <output id="progOut">20</output>%
+              </div>
+            </fieldset>
+
+            <div class="btns">
+              <button class="primary" type="submit">Create Account</button>
+              <button class="ghost" type="reset">Clear</button>
+              <button class="danger" type="button" id="fillSample">
+                Fill Sample Data
+              </button>
+            </div>
+
+            <div class="note">
+              <strong>Trainer note:</strong> Client-side validation improves UX,
+              but **server-side validation is mandatory**.
+            </div>
+
+            <!-- output summary box -->
+            <div class="kv" id="summaryBox" aria-live="polite">
+              <div><strong>Live Output</strong></div>
+              <div class="mini">Submit to see a summary here</div>
+              <div>Name</div>
+              <div id="oName">—</div>
+              <div>Email</div>
+              <div id="oEmail">—</div>
+              <div>Role</div>
+              <div id="oRole">—</div>
+              <div>City</div>
+              <div id="oCity">—</div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      // LOGIN: show password toggle
+      document
+        .getElementById("showLoginPass")
+        .addEventListener("change", (e) => {
+          document.getElementById("loginPassword").type = e.target.checked
+            ? "text"
+            : "password";
+        });
+
+      // REG: show password toggle
+      document.getElementById("showRegPass").addEventListener("change", (e) => {
+        document.getElementById("newPassword").type = e.target.checked
+          ? "text"
+          : "password";
+      });
+
+      // Range -> output
+      const exp = document.getElementById("exp");
+      const expOut = document.getElementById("expOut");
+      exp.addEventListener("input", () => (expOut.value = exp.value));
+
+      // Password meter scoring (simple demo scoring)
+      const pass = document.getElementById("newPassword");
+      const meter = document.getElementById("passMeter");
+      const score = document.getElementById("passScore");
+      const passText = document.getElementById("passText");
+
+      function calcScore(p) {
+        let s = 0;
+        if (p.length >= 8) s += 35;
+        if (/[0-9]/.test(p)) s += 20;
+        if (/[A-Z]/.test(p)) s += 20;
+        if (/[^A-Za-z0-9]/.test(p)) s += 25;
+        return Math.min(100, s);
+      }
+
+      pass.addEventListener("input", () => {
+        const s = calcScore(pass.value);
+        meter.value = s;
+        score.value = s;
+
+        passText.className = "validHint " + (s >= 70 ? "ok" : "bad");
+        passText.textContent =
+          "Score: " + s + "/100 " + (s >= 70 ? "(Strong)" : "(Weak)");
+      });
+
+      // Profile progress (demo)
+      const prog = document.getElementById("profileProg");
+      const progOut = document.getElementById("progOut");
+
+      function updateProgress() {
+        let v = 0;
+        if (document.getElementById("fullName").value.trim().length >= 3)
+          v += 20;
+        if (document.getElementById("regEmail").value.trim()) v += 20;
+        if (document.getElementById("newPassword").value.trim().length >= 8)
+          v += 20;
+        if (document.getElementById("role").value) v += 20;
+        if (document.getElementById("phone").value.trim()) v += 20;
+        prog.value = v;
+        progOut.value = v;
+      }
+
+      ["fullName", "regEmail", "newPassword", "role", "phone"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", updateProgress);
+        document.getElementById(id).addEventListener("change", updateProgress);
+      });
+
+      // Fill sample data button (for classroom demo)
+      document.getElementById("fillSample").addEventListener("click", () => {
+        document.getElementById("fullName").value = "Gopi Suresh";
+        document.getElementById("phone").value = "9876543210";
+        document.getElementById("dob").value = "1996-06-15";
+        document.getElementById("regEmail").value = "gopi@example.com";
+        document.getElementById("newPassword").value = "Gopi@2025";
+        document.getElementById("role").value = "developer";
+        document.getElementById("city").value = "Chennai";
+      });
+    </script>
+  </body>
+</html>

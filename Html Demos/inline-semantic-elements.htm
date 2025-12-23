@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML Inline Semantic Tags — Real World Demo</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f6f7fb;
+        margin: 0;
+        color: #222;
+      }
+      header {
+        background: #0b6a3c;
+        color: #fff;
+        padding: 18px 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+      header p {
+        margin: 6px 0 0;
+        opacity: 0.9;
+      }
+      .wrap {
+        max-width: 1050px;
+        margin: 18px auto;
+        padding: 0 16px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 14px;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .label {
+        display: inline-block;
+        font-size: 12px;
+        background: #eef2ff;
+        color: #3730a3;
+        padding: 3px 8px;
+        border-radius: 999px;
+        margin-right: 6px;
+      }
+      .demo {
+        background: #f9fafb;
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .out {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      code {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      kbd {
+        background: #111827;
+        color: #fff;
+        border: 1px solid #374151;
+        border-bottom-width: 3px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-size: 12px;
+      }
+      .tip {
+        border-bottom: 1px dotted #111827;
+        cursor: help;
+        position: relative;
+      }
+      .tip:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        left: 0;
+        top: 120%;
+        background: #111827;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        width: 260px;
+        font-size: 12px;
+        line-height: 1.35;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        z-index: 10;
+      }
+      .price {
+        font-size: 18px;
+      }
+      .old {
+        color: #6b7280;
+        margin-right: 10px;
+      }
+      .new {
+        color: #065f46;
+        font-weight: 700;
+      }
+      .policy del {
+        background: #fee2e2;
+        color: #7f1d1d;
+        padding: 1px 4px;
+        border-radius: 5px;
+      }
+      .policy ins {
+        background: #dcfce7;
+        color: #14532d;
+        padding: 1px 4px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .chip {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #ecfeff;
+        color: #155e75;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HTML Inline Semantic Tags — Real-world Implementations</h1>
+      <p>Each card shows: Code → Real UI Demo → Output (what user sees)</p>
+    </header>
+
+    <div class="wrap">
+      <!-- 1) span -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;span&gt;</span> Generic inline wrapper
+          (styling / grouping)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> E-commerce product title with a “New” badge.</p>
+            <p>
+              Apple AirPods Pro
+              <span class="chip">NEW</span>
+              <span style="color: #6b7280; font-size: 12px"
+                >(limited stock)</span
+              >
+            </p>
+            <p>
+              <code>&lt;span class="chip"&gt;NEW&lt;/span&gt;</code> is used to
+              style only the word “NEW”.
+            </p>
+          </div>
+          <!-- <div class="out">
+            <p>
+              <b>Output (what you’ll see):</b> Product name with a small “NEW”
+              pill badge next to it.
+            </p>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- 2) strong -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;strong&gt;</span> Important text (screen
+          readers treat it as important)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Delete confirmation warning.</p>
+            <p>
+              <strong>Warning:</strong> This action permanently deletes your
+              account.
+            </p>
+            <p><code>&lt;strong&gt;Warning:&lt;/strong&gt;</code></p>
+          </div>
+          <!-- <div class="out">
+            <p>
+              <b>Output:</b> “Warning:” appears bold and is treated as important
+              emphasis for accessibility.
+            </p>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- 3) em -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;em&gt;</span> Emphasis (meaningful stress)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Signup instructions.</p>
+            <p>You <em>must</em> verify your email before logging in.</p>
+            <p><code>You &lt;em&gt;must&lt;/em&gt; verify...</code></p>
+          </div>
+          <!-- <div class="out">
+            <p>
+              <b>Output:</b> “must” appears italic by default and also indicates
+              stressed emphasis to assistive tech.
+            </p>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- 4) b / i -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;b&gt; / &lt;i&gt;</span> Styling-only emphasis
+          (no “importance” meaning)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> UI labels in a dashboard.</p>
+            <p>
+              <b>Status:</b> Active &nbsp; | &nbsp; <i>Last sync:</i> 10:45 AM
+            </p>
+            <p>
+              <code
+                >&lt;b&gt;Status:&lt;/b&gt; ... &lt;i&gt;Last
+                sync:&lt;/i&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Text looks bold/italic for style, but it doesn’t
+              communicate “importance” like
+              <code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5) u -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;u&gt;</span> Underline (commonly for
+          annotations like misspelling)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Spell-check highlight in an editor.</p>
+            <p>Incorrect word: <u>definately</u> (suggestion: definitely)</p>
+            <p><code>Incorrect word: &lt;u&gt;definately&lt;/u&gt;</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> The wrong word appears underlined (like many
+              editors mark spelling issues).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6) small -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;small&gt;</span> Small print (legal /
+          secondary info)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Checkout terms.</p>
+            <p class="price">Total: ₹2,499</p>
+            <p>
+              <small
+                >By placing the order, you agree to the Terms & Privacy
+                Policy.</small
+              >
+            </p>
+            <p>
+              <code>&lt;small&gt;By placing the order...&lt;/small&gt;</code>
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> The terms line appears smaller and visually
+              “secondary”.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7) mark -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;mark&gt;</span> Highlight relevant content
+          (search highlight)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Search results for keyword “Azure”.</p>
+            <p>Result: Learn <mark>Azure</mark> DevOps with real projects.</p>
+            <p><code>Learn &lt;mark&gt;Azure&lt;/mark&gt; DevOps...</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> “Azure” gets a highlighted background so users can
+              spot matches quickly.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8) time -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;time&gt;</span> Machine-readable date/time
+          (SEO + accessibility)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Blog post date.</p>
+            <p>Published: <time datetime="2025-12-23">Dec 23, 2025</time></p>
+            <p>
+              <code
+                >&lt;time datetime="2025-12-23"&gt;Dec 23,
+                2025&lt;/time&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Users see “Dec 23, 2025”. Search engines/screen
+              readers can read the exact date from <code>datetime</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9) abbr -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;abbr&gt;</span> Abbreviation with full meaning
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Tooltip-like meaning for short words.</p>
+            <p>
+              We teach <abbr title="HyperText Markup Language">HTML</abbr> and
+              <abbr title="Cascading Style Sheets">CSS</abbr>.
+            </p>
+            <p>
+              <code
+                >&lt;abbr title="HyperText Markup
+                Language"&gt;HTML&lt;/abbr&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> “HTML” displays normally, and on hover users see
+              the full form (browser tooltip).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10) cite -->
+      <div class="card">
+        <h2><span class="label">&lt;cite&gt;</span> Title of a work</h2>
+        <div class="grid">
+          <div class="demo">
+            <p>
+              <b>Scenario:</b> Referencing a book/article title in an academic
+              blog.
+            </p>
+            <p>
+              Recommended reading: <cite>Clean Code</cite> by Robert C. Martin.
+            </p>
+            <p>
+              <code
+                >Recommended reading: &lt;cite&gt;Clean Code&lt;/cite&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Title is typically italicized and semantically
+              marked as a work title.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11) dfn -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;dfn&gt;</span> Defining a term (glossary
+          style)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Tutorial glossary definition.</p>
+            <p>
+              <dfn>Semantic HTML</dfn> means using tags that describe the
+              meaning of content (not just how it looks).
+            </p>
+            <p><code>&lt;dfn&gt;Semantic HTML&lt;/dfn&gt; means...</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Term is identified as the thing being defined
+              (useful for readers and tools).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12) code -->
+      <div class="card">
+        <h2><span class="label">&lt;code&gt;</span> Inline code fragment</h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Command shown in a dev tutorial.</p>
+            <p>Run <code>git status</code> to check the working tree.</p>
+            <p><code>Run &lt;code&gt;git status&lt;/code&gt; ...</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> The command appears in a monospace “code-like”
+              style.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13) kbd -->
+      <div class="card">
+        <h2><span class="label">&lt;kbd&gt;</span> Keyboard input</h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> App shortcuts help panel.</p>
+            <p>Save your work: <kbd>Ctrl</kbd> + <kbd>S</kbd></p>
+            <p>
+              <code
+                >Save: &lt;kbd&gt;Ctrl&lt;/kbd&gt; +
+                &lt;kbd&gt;S&lt;/kbd&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Keys look like keyboard buttons, easy for users to
+              recognize.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14) samp -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;samp&gt;</span> Sample output from a program
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p>
+              <b>Scenario:</b> Showing terminal output after building a project.
+            </p>
+            <p>Output: <samp>Build succeeded. 0 Warning(s) 0 Error(s)</samp></p>
+            <p>
+              <code>Output: &lt;samp&gt;Build succeeded...&lt;/samp&gt;</code>
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Text is marked as “program output” (semantics
+              matter in documentation).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15) var -->
+      <div class="card">
+        <h2><span class="label">&lt;var&gt;</span> Variable name</h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Math / algorithm explanation.</p>
+            <p>
+              If <var>discount</var> is 10, then final price = price − (price ×
+              <var>discount</var>/100).
+            </p>
+            <p><code>If &lt;var&gt;discount&lt;/var&gt; is 10...</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Variables are clearly identified (good for
+              tutorials and documentation).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16) sub/sup -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;sub&gt; / &lt;sup&gt;</span> Subscript &
+          Superscript
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Science and math formatting.</p>
+            <p>Water is H<sub>2</sub>O and square is x<sup>2</sup>.</p>
+            <p>
+              <code
+                >H&lt;sub&gt;2&lt;/sub&gt;O and x&lt;sup&gt;2&lt;/sup&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p><b>Output:</b> “2” in H₂O goes down; “2” in x² goes up.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17) s -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;s&gt;</span> No longer accurate
+          (strike-through)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> E-commerce pricing update.</p>
+            <p class="price">
+              <span class="old"><s>₹3,999</s></span>
+              <span class="new">₹2,499</span>
+            </p>
+            <p><code>&lt;s&gt;₹3,999&lt;/s&gt; ₹2,499</code></p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Old price appears struck out, showing discount
+              clearly.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18) del/ins -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;del&gt; / &lt;ins&gt;</span> Deleted/Inserted
+          text (edit tracking)
+        </h2>
+        <div class="grid">
+          <div class="demo policy">
+            <p><b>Scenario:</b> Policy update page showing changes.</p>
+            <p>
+              We will retain your data for
+              <del>90 days</del>
+              <ins>30 days</ins>
+              after account closure.
+            </p>
+            <p>
+              <code
+                >retain for &lt;del&gt;90 days&lt;/del&gt; &lt;ins&gt;30
+                days&lt;/ins&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Old text looks removed, new text looks added (very
+              clear for readers).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 19) wbr -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;wbr&gt;</span> Word break opportunity
+          (mobile-friendly)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Long URL in mobile layout.</p>
+            <p
+              style="
+                max-width: 340px;
+                border: 1px solid #e5e7eb;
+                padding: 10px;
+                border-radius: 10px;
+              "
+            >
+              https://ittechgenie.com/courses/html5/<wbr />inline-semantic-tags/<wbr />real-world-demo/<wbr />chapter-1
+            </p>
+            <p>
+              <code
+                >.../html5/&lt;wbr&gt;inline.../&lt;wbr&gt;real.../&lt;wbr&gt;chapter-1</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> On small screens the long URL can wrap neatly at
+              your chosen break points.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 20) bdi/bdo -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;bdi&gt; / &lt;bdo&gt;</span> Bi-directional
+          text handling (mixed languages)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p>
+              <b>Scenario:</b> Usernames (unknown direction) mixed with English
+              text.
+            </p>
+            <p>Customer: <bdi>علي</bdi> placed an order.</p>
+
+            <p style="margin-top: 12px">
+              <b>Scenario:</b> Force direction using <code>&lt;bdo&gt;</code>:
+            </p>
+            <p><bdo dir="rtl">This text is forced RTL</bdo></p>
+
+            <p>
+              <code>Customer: &lt;bdi&gt;علي&lt;/bdi&gt; placed an order</code>
+            </p>
+            <p>
+              <code
+                >&lt;bdo dir="rtl"&gt;This text is forced RTL&lt;/bdo&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> - <b>BDI</b> keeps mixed-direction text safe in
+              sentences. - <b>BDO</b> forces direction (useful for special UI
+              needs).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 21) ruby/rt/rp -->
+      <div class="card">
+        <h2>
+          <span class="label">&lt;ruby&gt; / &lt;rt&gt; / &lt;rp&gt;</span>
+          Pronunciation annotations (language learning)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p>
+              <b>Scenario:</b> Japanese learning website showing pronunciation.
+            </p>
+            <p style="font-size: 20px">
+              <ruby>
+                漢字
+                <rp>(</rp><rt>かんじ</rt><rp>)</rp>
+              </ruby>
+              means “Kanji”.
+            </p>
+            <p>
+              <code
+                >&lt;ruby&gt;漢字&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;かんじ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Small pronunciation text appears above/beside the
+              word (depending on browser), helping learners read correctly.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus: tooltip using span -->
+      <div class="card">
+        <h2>
+          Bonus: Tooltip example using
+          <span class="label">&lt;span&gt;</span> (real-world UI)
+        </h2>
+        <div class="grid">
+          <div class="demo">
+            <p><b>Scenario:</b> Help tooltip in a form.</p>
+            <p>
+              Password
+              <span
+                class="tip"
+                data-tip="Use 8+ characters, at least 1 number, 1 uppercase letter, and 1 symbol."
+              >
+                (?)
+              </span>
+            </p>
+            <p>
+              <code
+                >&lt;span class="tip" data-tip="..."&gt;(?)&lt;/span&gt;</code
+              >
+            </p>
+          </div>
+          <div class="out">
+            <p>
+              <b>Output:</b> Hover on “(?)” shows a tooltip explaining password
+              rules.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

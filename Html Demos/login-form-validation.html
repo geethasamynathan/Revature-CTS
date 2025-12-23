@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-world Login Form</title>
+
+    <style>
+      /* Simple, clean styling */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f6f7fb;
+        color: #222;
+        line-height: 1.5;
+      }
+
+      .wrap {
+        width: min(900px, 92%);
+        margin: 40px auto;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .card {
+        background: #fff;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      h2 {
+        margin: 0 0 6px 0;
+      }
+      .sub {
+        margin: 0 0 14px 0;
+        color: #555;
+      }
+
+      fieldset {
+        border: 1px solid #e6e6e6;
+        border-radius: 10px;
+        padding: 14px;
+      }
+
+      legend {
+        padding: 0 8px;
+        font-weight: 700;
+      }
+
+      label {
+        display: block;
+        margin: 12px 0 6px;
+        font-weight: 600;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d7d7d7;
+        border-radius: 10px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #0b5ed7;
+        box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.15);
+      }
+
+      .help {
+        margin-top: 6px;
+        font-size: 13px;
+        color: #666;
+      }
+
+      /* Inline chips */
+      .inline {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border: 1px solid #e6e6e6;
+        border-radius: 999px;
+        background: #fafafa;
+      }
+
+      /* Buttons */
+      .btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: none;
+        padding: 10px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .primary {
+        background: #0b5ed7;
+        color: #fff;
+      }
+      .primary:hover {
+        filter: brightness(0.95);
+      }
+
+      .ghost {
+        background: #eef2f7;
+        color: #222;
+      }
+      .ghost:hover {
+        filter: brightness(0.98);
+      }
+
+      .note {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #f2f7ff;
+        border: 1px solid #d8e7ff;
+        font-size: 14px;
+      }
+
+      /* Validation UI */
+      .error {
+        margin-top: 6px;
+        font-size: 13px;
+        color: #b00020;
+      }
+
+      .invalid {
+        border-color: #b00020 !important;
+        box-shadow: 0 0 0 3px rgba(176, 0, 32, 0.12) !important;
+      }
+
+      .success {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #eaf7ea;
+        border: 1px solid #cfe9cf;
+        color: #1f5f1f;
+        font-weight: 600;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="grid">
+        <section class="card">
+          <h2>✅ Real-world Login Form</h2>
+          <p class="sub">
+            Uses: form, label, input(email/password), checkbox, button, small
+            help text, autocomplete
+          </p>
+
+          <form id="loginForm" action="#" method="post" novalidate>
+            <fieldset>
+              <legend>Sign In</legend>
+
+              <label for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+                aria-describedby="loginEmailHelp"
+              />
+              <div class="help" id="loginEmailHelp">
+                Use your work email address.
+              </div>
+              <div class="error" id="emailError"></div>
+
+              <label for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+                minlength="6"
+                required
+                aria-describedby="loginPassHelp"
+              />
+              <div class="help" id="loginPassHelp">Minimum 6 characters.</div>
+              <div class="error" id="passError"></div>
+
+              <div class="inline">
+                <span class="chip">
+                  <input id="rememberMe" name="rememberMe" type="checkbox" />
+                  <label for="rememberMe">Remember me</label>
+                </span>
+
+                <span class="chip">
+                  <input id="showLoginPass" type="checkbox" />
+                  <label for="showLoginPass">Show password</label>
+                </span>
+              </div>
+
+              <div class="btns">
+                <button class="primary" type="submit">Sign In</button>
+                <button class="ghost" type="reset">Reset</button>
+              </div>
+
+              <div class="note">
+                <strong>UX tip:</strong> Login should ask only what’s needed:
+                email + password. Keep it short.
+              </div>
+
+              <div class="success" id="successBox">
+                ✅ Valid input! Form is ready to submit.
+              </div>
+            </fieldset>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      // Simple validation + show password feature
+
+      const form = document.getElementById("loginForm");
+      const email = document.getElementById("loginEmail");
+      const pass = document.getElementById("loginPassword");
+      const emailError = document.getElementById("emailError");
+      const passError = document.getElementById("passError");
+      const successBox = document.getElementById("successBox");
+      const showPass = document.getElementById("showLoginPass");
+
+      // Show/Hide password
+      showPass.addEventListener("change", () => {
+        pass.type = showPass.checked ? "text" : "password";
+      });
+
+      function setError(input, errorEl, message) {
+        input.classList.add("invalid");
+        errorEl.textContent = message;
+      }
+
+      function clearError(input, errorEl) {
+        input.classList.remove("invalid");
+        errorEl.textContent = "";
+      }
+
+      function isValidEmail(value) {
+        // Simple email check (good enough for client-side)
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault(); // for practice: stop real submission
+        successBox.style.display = "none";
+
+        let ok = true;
+
+        // EMAIL validation
+        const emailVal = email.value.trim();
+        if (!emailVal) {
+          setError(email, emailError, "Email is required.");
+          ok = false;
+        } else if (!isValidEmail(emailVal)) {
+          setError(
+            email,
+            emailError,
+            "Enter a valid email (example: user@company.com)."
+          );
+          ok = false;
+        } else {
+          clearError(email, emailError);
+        }
+
+        // PASSWORD validation
+        const passVal = pass.value;
+        if (!passVal) {
+          setError(pass, passError, "Password is required.");
+          ok = false;
+        } else if (passVal.length < 6) {
+          setError(pass, passError, "Password must be at least 6 characters.");
+          ok = false;
+        } else {
+          clearError(pass, passError);
+        }
+
+        if (ok) {
+          successBox.style.display = "block";
+          // In real apps: form.submit() OR call API (fetch/axios)
+        }
+      });
+
+      form.addEventListener("reset", () => {
+        clearError(email, emailError);
+        clearError(pass, passError);
+        successBox.style.display = "none";
+        pass.type = "password";
+        showPass.checked = false;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+/* =============== Base Reset & Page Defaults =============== */
+* {
+  box-sizing: border-box;           /* padding/border included in width */
+}
+
+body {
+  margin: 0;                        /* removes default browser margin */
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background: #c5cbcc;
+}
+
+/* =============== Common Container Look =============== */
+header, main, footer {
+  width: min(1100px, 92%);
+  margin: 0 auto;                   /* center align */
+}
+
+/* =============== Top Header =============== */
+body > header {
+  padding: 18px 0;
+}
+
+body > header h1 {
+  margin: 0 0 10px 0;
+  font-size: 38px;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation styling */
+body > header nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+body > header nav a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #0b5ed7;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+body > header nav a:hover {
+  background: #e7f1ff;
+}
+
+/* =============== Main Layout (Article + Aside) =============== */
+main {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;  /* article bigger, aside smaller */
+  gap: 18px;
+  margin: 14px auto 20px auto;
+}
+
+/* Make it responsive for mobile */
+@media (max-width: 850px) {
+  main {
+    grid-template-columns: 1fr;      /* stack article & aside */
+  }
+}
+
+/* =============== Article Card =============== */
+article {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Article heading */
+article > header h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+article > header p {
+  margin: 8px 0 0 0;
+  color: #555;
+}
+
+/* =============== Section Content =============== */
+section h3 {
+  margin-top: 18px;
+  font-size: 22px;
+}
+
+/* Highlight tag */
+mark {
+  background: #fff176;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* =============== Figure & Image =============== */
+figure {
+  margin: 16px 0;
+  padding: 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+figure img {
+  width: 100%;                      /* responsive image */
+  max-width: 650px;                 /* prevents too wide */
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+figcaption {
+  margin-top: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* =============== Details / Summary (FAQ dropdown) =============== */
+details {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #f2f7ff;
+  border: 1px solid #0441a2;
+  border-radius: 12px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #0b5ed7;
+}
+
+/* =============== Article Footer (Tags) =============== */
+article footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  color: #444;
+}
+
+/* =============== Aside Card =============== */
+aside {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  height: fit-content;              /* stops stretching */
+}
+
+aside h3 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+aside ul {
+  padding-left: 18px;
+  margin: 10px 0 0 0;
+}
+
+aside a {
+  color: #0b5ed7;
+  text-decoration: none;
+}
+
+aside a:hover {
+  text-decoration: underline;
+}
+
+/* =============== Bottom Footer =============== */
+body > footer {
+  padding: 18px 0 30px 0;
+  color: #444;
+}
+
+address {
+  font-style: normal;               /* remove italic */
+}

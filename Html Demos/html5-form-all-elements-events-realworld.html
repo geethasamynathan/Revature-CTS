@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML5 Form Elements + Events — Real-World Demo</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --brand: #0b6a3c;
+        --brand2: #14532d;
+        --danger: #b91c1c;
+        --warn: #b45309;
+        --ok: #166534;
+        --shadow: 0 10px 26px rgba(2, 6, 23, 0.08);
+        --r: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: var(--bg);
+        color: var(--text);
+      }
+      header {
+        background: linear-gradient(90deg, var(--brand), #128a50);
+        color: #fff;
+        padding: 18px 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 18px;
+      }
+      header p {
+        margin: 6px 0 0;
+        font-size: 13px;
+        opacity: 0.95;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 18px auto;
+        padding: 0 16px;
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+      }
+      @media (min-width: 980px) {
+        .grid {
+          grid-template-columns: 1.2fr 0.8fr;
+        }
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .sub {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      fieldset {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        margin: 0 0 12px;
+      }
+      legend {
+        padding: 0 8px;
+        color: var(--brand2);
+        font-weight: 800;
+        font-size: 13px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fff;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #86efac;
+        box-shadow: 0 0 0 4px rgba(134, 239, 172, 0.22);
+      }
+      textarea {
+        min-height: 92px;
+        resize: vertical;
+      }
+      .row {
+        display: grid;
+        gap: 12px;
+      }
+      @media (min-width: 640px) {
+        .row.two {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 900px) {
+        .row.three {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+      .help {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .inline {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .chip input {
+        width: auto;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .primary {
+        background: var(--brand);
+        color: #fff;
+      }
+      .primary:hover {
+        filter: brightness(0.95);
+      }
+      .ghost {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .danger {
+        background: #fee2e2;
+        color: #7f1d1d;
+      }
+      .toast {
+        display: none;
+        margin-top: 12px;
+        border-radius: 12px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        background: #f9fafb;
+        font-size: 13px;
+        color: var(--text);
+      }
+      .toast.show {
+        display: block;
+      }
+      .toast.ok {
+        border-color: #bbf7d0;
+        background: #f0fdf4;
+        color: var(--ok);
+      }
+      .toast.bad {
+        border-color: #fecaca;
+        background: #fef2f2;
+        color: var(--danger);
+      }
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: #ecfeff;
+        color: #155e75;
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .kv div {
+        padding: 8px 10px;
+        border: 1px dashed var(--border);
+        border-radius: 12px;
+        background: #f9fafb;
+        font-size: 13px;
+      }
+      .focusRing {
+        outline: 3px solid rgba(59, 130, 246, 0.25);
+      }
+      progress {
+        width: 100%;
+        height: 14px;
+      }
+      meter {
+        width: 100%;
+        height: 16px;
+      }
+      .hintRow {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .required::after {
+        content: " *";
+        color: var(--danger);
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 12px 0;
+      }
+      .codeNote {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>“Employee Onboarding” Form</h1>
+    </header>
+
+    <div class="wrap">
+      <div class="grid">
+        <section class="card">
+          <h2>🧾 Employee Onboarding Form</h2>
+          <p class="sub">
+            This is a realistic HR onboarding form used in companies for joining
+            formalities. It demonstrates
+            <span class="pill">all major HTML5 form controls</span> + common
+            events.
+          </p>
+
+          <form id="onboardForm" novalidate>
+            <input
+              type="hidden"
+              id="campaignId"
+              name="campaignId"
+              value="HR-ONBOARD-2025"
+            />
+
+            <fieldset>
+              <legend>Personal Details</legend>
+
+              <div class="row two">
+                <div>
+                  <label class="required" for="fullName"
+                    >Full Name (text)</label
+                  >
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    placeholder="Geetha samynathan"
+                    minlength="3"
+                    required
+                    autocomplete="name"
+                  />
+                  <div class="help">
+                    Event: <span class="codeNote">input</span> updates preview
+                    card.
+                  </div>
+                </div>
+
+                <div>
+                  <label class="required" for="email">Email (email)</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="geetha@nivedhainfotec.com"
+                    required
+                    autocomplete="email"
+                    inputmode="email"
+                  />
+                  <div class="help">
+                    Event: <span class="codeNote">invalid</span> shows message
+                    if email is wrong.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row three">
+                <div>
+                  <label class="required" for="phone"
+                    >Mobile (tel + pattern)</label
+                  >
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="9876543210"
+                    pattern="^[6-9]\d{9}$"
+                    required
+                    inputmode="tel"
+                    autocomplete="tel"
+                  />
+                  <div class="help">
+                    India format (10 digits). Event:
+                    <span class="codeNote">blur</span> validates.
+                  </div>
+                </div>
+
+                <div>
+                  <label class="required" for="dob">DOB (date)</label>
+                  <input id="dob" name="dob" type="date" required />
+                  <div class="help">
+                    Event: <span class="codeNote">change</span> updates age
+                    output.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="website">Portfolio (url)</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="url"
+                    placeholder="https://your-portfolio.com"
+                    inputmode="url"
+                  />
+                  <div class="help">
+                    Optional, but improves profile quality.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row two">
+                <div>
+                  <label for="city">City (datalist suggestions)</label>
+                  <input
+                    id="city"
+                    name="city"
+                    list="cityList"
+                    placeholder="Type to see suggestions (Chennai...)"
+                  />
+                  <datalist id="cityList">
+                    <option value="Chennai"></option>
+                    <option value="Coimbatore"></option>
+                    <option value="Bengaluru"></option>
+                    <option value="Hyderabad"></option>
+                    <option value="Mumbai"></option>
+                    <option value="Delhi"></option>
+                  </datalist>
+                  <div class="help">
+                    Event: <span class="codeNote">input</span> updates preview.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="searchSkill">Search Skill (search)</label>
+                  <input
+                    id="searchSkill"
+                    name="searchSkill"
+                    type="search"
+                    placeholder="Search: HTML, CSS, React..."
+                  />
+                  <div class="help">
+                    Event: <span class="codeNote">input</span> filters skill
+                    hints (demo).
+                  </div>
+                </div>
+              </div>
+
+              <label for="about">About You (textarea)</label>
+              <textarea
+                id="about"
+                name="about"
+                placeholder="Tell us about your experience, projects, and goals..."
+              ></textarea>
+              <div class="help">
+                Event: <span class="codeNote">input</span> updates preview.
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Account & Security</legend>
+
+              <div class="row two">
+                <div>
+                  <label class="required" for="password"
+                    >Create Password (password)</label
+                  >
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    minlength="8"
+                    required
+                    maxlength="12"
+                    autocomplete="new-password"
+                  />
+                  <div class="help">
+                    8+ chars, include number + uppercase + symbol for strong
+                    password.
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="hintRow">
+                    <div class="mini">Password Strength (meter)</div>
+                    <div class="mini">
+                      Score: <output id="passScore">0</output>/100
+                    </div>
+                  </div>
+                  <meter
+                    id="passMeter"
+                    min="0"
+                    max="100"
+                    low="35"
+                    high="70"
+                    optimum="90"
+                    value="90"
+                  ></meter>
+
+                  <div class="inline">
+                    <span class="chip">
+                      <input id="showPass" type="checkbox" />
+                      <label for="showPass" style="display: inline; margin: 0"
+                        >Show password (checkbox)</label
+                      >
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="required" for="department"
+                    >Department (select + optgroup)</label
+                  >
+                  <select id="department" name="department" required>
+                    <option value="" disabled selected>
+                      Select department
+                    </option>
+                    <optgroup label="Engineering">
+                      <option value="frontend">Frontend</option>
+                      <option value="backend">Backend</option>
+                      <option value="data">Data Engineering</option>
+                    </optgroup>
+                    <optgroup label="Business">
+                      <option value="sales">Sales</option>
+                      <option value="hr">HR</option>
+                      <option value="support">Support</option>
+                    </optgroup>
+                  </select>
+                  <div class="help">
+                    Event: <span class="codeNote">change</span> updates preview.
+                  </div>
+
+                  <label class="required" for="empLevel">Level (number)</label>
+                  <input
+                    id="empLevel"
+                    name="empLevel"
+                    type="number"
+                    min="1"
+                    max="10"
+                    step="1"
+                    value="1"
+                    required
+                  />
+                  <div class="help">
+                    Example: 1=Junior, 5=Mid, 8=Senior (demo scale).
+                  </div>
+
+                  <label for="themeColor">Preferred Theme Color (color)</label>
+                  <input
+                    id="themeColor"
+                    name="themeColor"
+                    type="color"
+                    value="#0b6a3c"
+                  />
+                  <div class="help">
+                    Event: <span class="codeNote">input</span> changes preview
+                    accent.
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Work Preferences</legend>
+
+              <div class="row three">
+                <div>
+                  <label class="required" for="joinDateTime"
+                    >Joining Date & Time (datetime-local)</label
+                  >
+                  <input
+                    id="joinDateTime"
+                    name="joinDateTime"
+                    type="datetime-local"
+                    required
+                  />
+                  <div class="help">
+                    Event: <span class="codeNote">change</span> updates schedule
+                    preview.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="joinMonth">Preferred Start Month (month)</label>
+                  <input id="joinMonth" name="joinMonth" type="month" />
+                  <div class="help">Useful for planning batches.</div>
+                </div>
+
+                <div>
+                  <label for="joinWeek">Preferred Start Week (week)</label>
+                  <input id="joinWeek" name="joinWeek" type="week" />
+                  <div class="help">Used in training scheduling.</div>
+                </div>
+              </div>
+
+              <div class="row two">
+                <div>
+                  <label class="required">Work Mode (radio)</label>
+                  <div class="inline">
+                    <span class="chip">
+                      <input
+                        id="modeOffice"
+                        name="workMode"
+                        type="radio"
+                        value="Office"
+                        required
+                      />
+                      <label for="modeOffice" style="display: inline; margin: 0"
+                        >Office</label
+                      >
+                    </span>
+                    <span class="chip">
+                      <input
+                        id="modeHybrid"
+                        name="workMode"
+                        type="radio"
+                        value="Hybrid"
+                      />
+                      <label for="modeHybrid" style="display: inline; margin: 0"
+                        >Hybrid</label
+                      >
+                    </span>
+                    <span class="chip">
+                      <input
+                        id="modeRemote"
+                        name="workMode"
+                        type="radio"
+                        value="Remote"
+                      />
+                      <label for="modeRemote" style="display: inline; margin: 0"
+                        >Remote</label
+                      >
+                    </span>
+                  </div>
+                  <div class="help">
+                    Event: <span class="codeNote">change</span> updates preview.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="shiftTime">Preferred Shift Time (time)</label>
+                  <input id="shiftTime" name="shiftTime" type="time" />
+                  <div class="help">
+                    Event: <span class="codeNote">change</span> updates preview.
+                  </div>
+
+                  <label for="salary">Expected Salary (range + output)</label>
+                  <input
+                    id="salary"
+                    name="salary"
+                    type="range"
+                    min="15000"
+                    max="200000"
+                    step="5000"
+                    value="45000"
+                  />
+                  <div class="help">
+                    Value: ₹<output id="salaryOut">45000</output> / month
+                    (demo).
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Documents & Upload (file + progress)</legend>
+
+              <label for="resume">Upload Resume (file)</label>
+              <input
+                id="resume"
+                name="resume"
+                type="file"
+                accept=".pdf,.doc,.docx"
+              />
+              <div class="help">
+                Event: <span class="codeNote">change</span> shows file info +
+                simulates upload progress.
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="hintRow">
+                <div class="mini">Simulated Upload Progress (progress)</div>
+                <div class="mini">
+                  Uploaded: <output id="uploadOut">0</output>%
+                </div>
+              </div>
+              <progress id="uploadProg" value="0" max="100"></progress>
+              <div class="help" id="fileInfo">No file selected.</div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Consent</legend>
+
+              <div class="inline">
+                <span class="chip">
+                  <input id="terms" name="terms" type="checkbox" required />
+                  <label
+                    for="terms"
+                    style="display: inline; margin: 0"
+                    class="required"
+                    >I agree to company policies</label
+                  >
+                </span>
+                <span class="chip">
+                  <input id="updates" name="updates" type="checkbox" />
+                  <label for="updates" style="display: inline; margin: 0"
+                    >Send onboarding updates to email</label
+                  >
+                </span>
+              </div>
+
+              <div class="help">
+                Event: <span class="codeNote">change</span> updates toast
+                message.
+              </div>
+            </fieldset>
+
+            <div class="actions">
+              <button class="primary" type="submit">Submit Onboarding</button>
+              <button class="ghost" type="reset">Reset Form</button>
+              <button class="danger" type="button" id="fillSample">
+                Fill Sample Data
+              </button>
+            </div>
+
+            <div id="toast" class="toast" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <aside class="card" id="previewCard">
+          <h2>👀 Live Output (Event‑Driven Preview)</h2>
+          <p class="sub">
+            Updates using
+            <span class="pill"
+              >input / change / blur / invalid / submit / reset</span
+            >
+            events.
+          </p>
+
+          <div class="kv">
+            <div><strong>Full Name</strong></div>
+            <div id="pvName">—</div>
+            <div><strong>Email</strong></div>
+            <div id="pvEmail">—</div>
+            <div><strong>Phone</strong></div>
+            <div id="pvPhone">—</div>
+            <div><strong>Age</strong></div>
+            <div id="pvAge">—</div>
+            <div><strong>Department</strong></div>
+            <div id="pvDept">—</div>
+            <div><strong>Work Mode</strong></div>
+            <div id="pvMode">—</div>
+            <div><strong>Joining</strong></div>
+            <div id="pvJoin">—</div>
+            <div><strong>Shift Time</strong></div>
+            <div id="pvShift">—</div>
+            <div><strong>Expected Salary</strong></div>
+            <div id="pvSalary">₹—</div>
+            <div><strong>City</strong></div>
+            <div id="pvCity">—</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="mini muted">
+            <strong>Skills hint (from Search field):</strong>
+            <div id="skillHint" style="margin-top: 6px">
+              Type in “Search Skill” to see suggestions.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      const toast = $("toast");
+      function showToast(msg, type) {
+        toast.className = "toast show " + (type || "");
+        toast.textContent = msg;
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => (toast.className = "toast"), 3500);
+      }
+
+      function calcAge(dateStr) {
+        if (!dateStr) return "";
+        const dob = new Date(dateStr);
+        if (Number.isNaN(dob.getTime())) return "";
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+        return String(age);
+      }
+
+      function moneyINR(n) {
+        try {
+          return new Intl.NumberFormat("en-IN").format(Number(n));
+        } catch {
+          return String(n);
+        }
+      }
+
+      function selectedRadioValue(name) {
+        const el = document.querySelector(`input[name="${name}"]:checked`);
+        return el ? el.value : "";
+      }
+
+      function updatePreview() {
+        $("pvName").textContent = $("fullName").value || "—";
+        $("pvEmail").textContent = $("email").value || "—";
+        $("pvPhone").textContent = $("phone").value || "—";
+        $("pvCity").textContent = $("city").value || "—";
+
+        const age = calcAge($("dob").value);
+        $("pvAge").textContent = age ? age + " years" : "—";
+
+        const dept = $("department").value
+          ? $("department").selectedOptions[0].textContent
+          : "—";
+        $("pvDept").textContent = dept;
+
+        const mode = selectedRadioValue("workMode");
+        $("pvMode").textContent = mode || "—";
+
+        $("pvJoin").textContent = $("joinDateTime").value
+          ? $("joinDateTime").value.replace("T", " ")
+          : "—";
+        $("pvShift").textContent = $("shiftTime").value || "—";
+
+        $("pvSalary").textContent = "₹" + moneyINR($("salary").value);
+      }
+
+      function attachFocusBlur() {
+        const controls = document.querySelectorAll("input, select, textarea");
+        controls.forEach((ctrl) => {
+          ctrl.addEventListener("focus", () => ctrl.classList.add("focusRing"));
+          ctrl.addEventListener("blur", () => {
+            ctrl.classList.remove("focusRing");
+            if (ctrl.checkValidity()) ctrl.setCustomValidity("");
+            if (ctrl.id === "phone" && ctrl.value && !ctrl.checkValidity()) {
+              ctrl.setCustomValidity(
+                "Enter a valid 10-digit Indian mobile number (starts 6-9)."
+              );
+            }
+          });
+        });
+      }
+
+      function calcPassScore(p) {
+        let s = 0;
+        if (p.length >= 8) s += 35;
+        if (/[0-9]/.test(p)) s += 20;
+        if (/[A-Z]/.test(p)) s += 20;
+        if (/[^A-Za-z0-9]/.test(p)) s += 25;
+        return Math.min(100, s);
+      }
+
+      function onPasswordInput() {
+        const p = $("password").value;
+        const s = calcPassScore(p);
+        $("passMeter").value = s;
+        $("passScore").value = s;
+
+        if (p && (p.length < 8 || !/[0-9]/.test(p))) {
+          $("password").setCustomValidity(
+            "Password must be 8+ characters and include at least 1 number."
+          );
+        } else {
+          $("password").setCustomValidity("");
+        }
+        updatePreview();
+      }
+
+      function onSalaryInput() {
+        $("salaryOut").value = moneyINR($("salary").value);
+        updatePreview();
+      }
+
+      $("showPass").addEventListener("change", (e) => {
+        $("password").type = e.target.checked ? "text" : "password";
+      });
+
+      const skillBank = [
+        "HTML Forms",
+        "CSS Flexbox",
+        "CSS Grid",
+        "JavaScript DOM",
+        "Accessibility (a11y)",
+        "Bootstrap",
+        "React Basics",
+        "Figma UI",
+        "Responsive Design",
+      ];
+      $("searchSkill").addEventListener("input", () => {
+        const q = $("searchSkill").value.trim().toLowerCase();
+        if (!q) {
+          $("skillHint").textContent =
+            "Type in “Search Skill” to see suggestions.";
+          return;
+        }
+        const matches = skillBank
+          .filter((s) => s.toLowerCase().includes(q))
+          .slice(0, 6);
+        $("skillHint").textContent = matches.length
+          ? "Suggestions: " + matches.join(", ")
+          : "No suggestions found.";
+      });
+
+      let uploadTimer = null;
+      function simulateUpload() {
+        clearInterval(uploadTimer);
+        $("uploadProg").value = 0;
+        $("uploadOut").value = 0;
+        uploadTimer = setInterval(() => {
+          const next = Math.min(100, $("uploadProg").value + 8);
+          $("uploadProg").value = next;
+          $("uploadOut").value = next;
+          if (next >= 100) {
+            clearInterval(uploadTimer);
+            showToast("Resume upload completed (simulated).", "ok");
+          }
+        }, 120);
+      }
+
+      $("resume").addEventListener("change", () => {
+        const f = $("resume").files && $("resume").files[0];
+        if (!f) {
+          $("fileInfo").textContent = "No file selected.";
+          return;
+        }
+        $("fileInfo").textContent = `Selected: ${f.name} (${Math.round(
+          f.size / 1024
+        )} KB)`;
+        simulateUpload();
+      });
+
+      $("terms").addEventListener("change", () => {
+        showToast(
+          $("terms").checked
+            ? "Thanks! Consent saved."
+            : "Consent is required to submit.",
+          $("terms").checked ? "ok" : "bad"
+        );
+      });
+
+      $("dob").addEventListener("change", updatePreview);
+
+      [
+        "fullName",
+        "email",
+        "phone",
+        "city",
+        "department",
+        "joinDateTime",
+        "shiftTime",
+        "about",
+        "empLevel",
+        "themeColor",
+      ].forEach((id) => {
+        $(id).addEventListener("input", updatePreview);
+        $(id).addEventListener("change", updatePreview);
+      });
+
+      $("themeColor").addEventListener("input", () => {
+        $("previewCard").style.borderColor = $("themeColor").value;
+        updatePreview();
+      });
+
+      document
+        .querySelectorAll('input[name="workMode"]')
+        .forEach((r) => r.addEventListener("change", updatePreview));
+
+      $("salary").addEventListener("input", onSalaryInput);
+      $("salary").addEventListener("change", onSalaryInput);
+
+      $("password").addEventListener("input", onPasswordInput);
+
+      $("onboardForm").addEventListener(
+        "invalid",
+        (e) => {
+          e.preventDefault();
+          const el = e.target;
+          const label = document.querySelector(`label[for="${el.id}"]`);
+          const name = label
+            ? label.textContent.replace("*", "").trim()
+            : el.name || "Field";
+          showToast(`Please fix: ${name}`, "bad");
+        },
+        true
+      );
+
+      $("onboardForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!e.target.checkValidity()) {
+          showToast(
+            "Form has errors. Please correct highlighted fields.",
+            "bad"
+          );
+          return;
+        }
+        const payload = {
+          campaignId: $("campaignId").value,
+          fullName: $("fullName").value,
+          email: $("email").value,
+          phone: $("phone").value,
+          dob: $("dob").value,
+          age: calcAge($("dob").value),
+          website: $("website").value,
+          city: $("city").value,
+          department: $("department").value,
+          empLevel: $("empLevel").value,
+          workMode: selectedRadioValue("workMode"),
+          joinDateTime: $("joinDateTime").value,
+          shiftTime: $("shiftTime").value,
+          expectedSalary: $("salary").value,
+          updates: $("updates").checked,
+        };
+        console.log("SUBMIT PAYLOAD (demo):", payload);
+        showToast(
+          "Submitted successfully! (demo) Check Console for payload.",
+          "ok"
+        );
+      });
+
+      $("onboardForm").addEventListener("reset", () => {
+        setTimeout(() => {
+          $("passMeter").value = 0;
+          $("passScore").value = 0;
+          $("salaryOut").value = moneyINR($("salary").value);
+          $("uploadProg").value = 0;
+          $("uploadOut").value = 0;
+          $("fileInfo").textContent = "No file selected.";
+          $("skillHint").textContent =
+            "Type in “Search Skill” to see suggestions.";
+          $("previewCard").style.borderColor = "var(--border)";
+          updatePreview();
+          showToast("Form reset completed.", "");
+        }, 0);
+      });
+
+      $("fillSample").addEventListener("click", () => {
+        $("fullName").value = "Geetha Samynathan";
+        $("email").value = "geetha@nivedhainfotec.com";
+        $("phone").value = "9500774477";
+        $("dob").value = "1996-06-15";
+        $("website").value = "https://nivedhainfotec.com";
+        $("city").value = "Chennai";
+        $("department").value = "data";
+        $("empLevel").value = "5";
+        $("themeColor").value = "#0b6a3c";
+        $("joinDateTime").value = "2026-01-05T10:00";
+        $("shiftTime").value = "10:00";
+        $("salary").value = "75000";
+        $("terms").checked = true;
+        $("updates").checked = true;
+        $("modeHybrid").checked = true;
+        $("about").value =
+          "I am joining as a Data Engineer. Interested in UI/UX-friendly dashboards and clean HTML/CSS.";
+
+        onSalaryInput();
+        onPasswordInput();
+        updatePreview();
+        showToast("Sample data filled. Now try Submit.", "ok");
+      });
+
+      attachFocusBlur();
+      $("salaryOut").value = moneyINR($("salary").value);
+      updatePreview();
+    </script>
+  </body>
+</html>

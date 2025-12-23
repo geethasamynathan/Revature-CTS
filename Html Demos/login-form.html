@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <div class="wrap">
+      <div class="grid">
+        <!-- LOGIN FORM -->
+        <section class="card">
+          <h2>✅ Real-world Login Form</h2>
+          <p class="sub">
+            Uses: form, label, input(email/password), checkbox, button, small
+            help text, autocomplete
+          </p>
+
+          <form id="loginForm" action="#" method="post" novalidate>
+            <fieldset>
+              <legend>Sign In</legend>
+
+              <label for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+                aria-describedby="loginEmailHelp"
+              />
+              <div class="help" id="loginEmailHelp">
+                Use your work email address.
+              </div>
+
+              <label for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+                minlength="6"
+                required
+                aria-describedby="loginPassHelp"
+              />
+              <div class="help" id="loginPassHelp">Minimum 6 characters.</div>
+
+              <div class="inline">
+                <span class="chip">
+                  <input id="rememberMe" name="rememberMe" type="checkbox" />
+                  <label for="rememberMe">Remember me</label>
+                </span>
+
+                <span class="chip">
+                  <input id="showLoginPass" type="checkbox" />
+                  <label for="showLoginPass">Show password</label>
+                </span>
+              </div>
+
+              <div class="btns">
+                <button class="primary" type="submit">Sign In</button>
+                <button class="ghost" type="reset">Reset</button>
+              </div>
+
+              <div class="note">
+                <strong>UX tip:</strong> Login should ask only what’s needed:
+                email + password. Keep it short.
+              </div>
+            </fieldset>
+          </form>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
