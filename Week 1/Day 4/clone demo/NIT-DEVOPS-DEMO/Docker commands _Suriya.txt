@@ -1,0 +1,33 @@
+docker --version   --->  version of docker
+docker run hello-world  ---> run the hello-world
+docker images           ----> check the images in docker
+docker pull ubuntu      ----> pulling image from dockerhub
+docker run -it -d ubuntu ----> creating a ubuntu container
+docker ps -a		 ---> it will show all containers
+docker ps	        ----> it will show current running containers
+docker exec -it <Container Id> bash ---> accessing the running container
+echo hello ---> to excute for testing
+docker stop <Container Id>     ----> stop the container
+docker commit <Container Id> suriya/ubuntu   --> create one local image linke git
+docker login 	            ----> Checking for docker authenication
+docker push suriya/ubuntu	---> Push your container to Dockerhub
+docker rm <Container Id>       ----> remove your container
+docker images                  -----> Show the list is image having
+docker rmi <Image Id>/<Image Name>   --> Remove the image
+docker run postgres:9.6		----> run the command if your in administrator mode
+docker run -e POSTGRES_PASSWORD=YOUR_PASSWORD_DOCKERHUB postgres:9.6 --> in the normal powershell
+docker run postgress:10.10 ---> different wesion
+docker run -d redis   ---> for continous running/UP detach mode
+docket stop <Container Id>  --> stop the particular container or multiple container
+docker start <Container id> --> start particular contianer 
+docker run -p6000:6379 -d redis   --> change the particular port and made as new container
+docker rename older_name new_name   -->  renaming the existing container
+docker run -d -p6001:6379 --name redis_older redis:4.0  ---> change the particular port and name then made as new container
+docker exec -it <contianer Id> /bin/bash    --> interactive terminal the respective container
+docker logs <Container id>/name		---> Check the logges and debugging
+
+
+
+
+
+-- how to remove all image in docker?
