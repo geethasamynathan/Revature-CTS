@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>display:flex example</title>
+    <style>
+      .toolbar {
+        display: flex; /* block-level flex container */
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        margin-bottom: 12px;
+      }
+      .btn {
+        padding: 8px 12px;
+        border: 1px solid #999;
+        border-radius: 10px;
+        background: #f7f7f7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <div class="btn">Home</div>
+      <div class="btn">Courses</div>
+      <div class="btn">Contact</div>
+    </div>
+
+    <p>
+      Text comes on the next line because <b>.toolbar</b> is <b>block-level</b>.
+    </p>
+  </body>
+</html>

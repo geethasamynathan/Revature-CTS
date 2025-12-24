@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>display:inline-flex example</title>
+  <style>
+    .tags {
+      display: inline-flex;    /* inline-level flex container */
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+.tags1 {
+      display:flex;    /* inline-level flex container */
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+
+    .tag {
+      padding: 4px 8px;
+      border: 1px solid #999;
+      border-radius: 999px;
+      background: #f7f7f7;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<h2> inline-flex </h2>
+  <p>
+    Course skills:
+    <span class="tags">
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">JS</span>
+    </span>
+    (this group stays inline with the sentence)
+  </p>
+<h2> flex </h2>
+
+  <p>
+    Course skills:
+    <span class="tags1">
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">JS</span>
+    </span>
+    (this group stays inline with the sentence)
+  </p>
+
+</body>
+</html>

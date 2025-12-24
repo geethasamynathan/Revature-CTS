@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation with Map (Simple)</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      #map {
+        height: 400px;
+        margin-top: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      button {
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Simple Geolocation + Map</h2>
+
+    <button onclick="getLocation()">Get My Location</button>
+
+    <p id="output">Click the button to get your location.</p>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+      let map;
+      let marker;
+
+      // Default map view (before location is fetched)
+      map = L.map("map").setView([20.5937, 78.9629], 5); // India center
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      function getLocation() {
+        const output = document.getElementById("output");
+
+        if (!navigator.geolocation) {
+          output.textContent = "Geolocation is not supported by your browser.";
+          return;
+        }
+
+        output.textContent = "Fetching location...";
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            output.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lng;
+
+            // Move map to current location
+            map.setView([lat, lng], 15);
+
+            // Add or update marker
+            if (marker) {
+              marker.setLatLng([lat, lng]);
+            } else {
+              marker = L.marker([lat, lng]).addTo(map);
+            }
+            marker.bindPopup("You are here ✅").openPopup();
+          },
+          (error) => {
+            output.textContent = "Error getting location: " + error.message;
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
