@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<title>Example</title>
+<style>
+  .grid {
+    display: grid;
+    grid-gap: 2vw;
+    border: 1px solid black;
+    margin: 10px;
+  }
+  .grid > div {
+    font-size: 5vw;
+    padding: 0.5em;
+    background: gold;
+    text-align: center;
+  }
+  .auto-fill1 {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .auto-fit1 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+</style>
+<div class="grid auto-fill1">
+  <div>1</div>
+  <div>2</div>
+</div>
+<div class="grid auto-fit1">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+</div>
