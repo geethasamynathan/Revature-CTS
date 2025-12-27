@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<style>
+  .zorro {
+    width: 50px;
+    padding: 20px;
+    text-align: center;
+    background: gold;
+    position: relative;
+    animation: zorro 1s ease-in 0s 6 alternate;
+  }
+  @keyframes zorro {
+    from {
+      top: 0px;
+      left: 0px;
+    }
+    33% {
+      top: 0px;
+      left: 150px;
+    }
+    66% {
+      top: 120px;
+      left: 0px;
+    }
+    to {
+      top: 120px;
+      left: 150px;
+    }
+  }
+</style>
+<p>Call me...</p>
+<div class="zorro">Zorro!</div>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<title>Example</title>
+<style>
+  .springy-text {
+    color: black;
+    animation-name: springy-text;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+  }
+  .springy-text {
+    color: black;
+    /* animation shorthand:
+     name duration timing-function delay iteration-count direction fill-mode */
+    animation: springy-text 1s ease 0s 1 normal forwards;
+  }
+  @keyframes springy-text {
+    0% {
+      letter-spacing: 1.2em;
+      color: white;
+    }
+    100% {
+      letter-spacing: 0.1em;
+      color: orange;
+    }
+  }
+</style>
+<h3 class="springy-text">Animations!</h3>

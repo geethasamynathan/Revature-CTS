@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <style>
+      /* 
+        div {
+  width: 150px;
+  height: 150px;
+  color: white;
+  animation-name: change-width;
+  animation-duration: 7s;
+}
+
+.first-div {
+  background-color: purple;
+  animation-timing-function: ease-in-out;
+}
+
+.second-div {
+  background-color: orange;
+  animation-timing-function: linear;
+}
+
+@keyframes change-width {
+  from {width: 50px;}
+  to {width: 100%;}
+} */
+
+      div {
+        width: 150px;
+        height: 150px;
+        color: white;
+        animation-name: change-width;
+        animation-duration: 7s;
+      }
+      .first-div {
+        background-color: purple;
+        animation-timing-function: ease-in-out;
+      }
+      .second-div {
+        background-color: orange;
+        animation-timing-function: linear;
+        animation-delay: 4s;
+      }
+      @keyframes change-width {
+        from {
+          width: 50px;
+        }
+        to {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="first-div">First Div</div>
+
+    <div class="second-div">Second Div</div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<title>Example</title>
+<style>
+  div.rotate {
+    width: 50px;
+    height: 30px;
+    padding: 20px;
+    text-align: center;
+    background: gold;
+    animation: rotate 5s linear 0s infinite normal none;
+    backface-visibility: hidden;
+  }
+  @keyframes rotate {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+</style>
+<div class="rotate">Rotating box...</div>
+<p>
+  This example uses
+  <a target="property" href="/css/css3/properties/css_transform.cfm"
+    ><code>transform</code></a
+  >
+  along with the
+  <a target="property" href="/css/css3/properties/css_animation.cfm"
+    ><code>animation</code></a
+  >
+  property and
+  <a target="property" href="/css/css3/properties/css_@keyframes.cfm"
+    ><code>@keyframes</code></a
+  >
+  at-rule to create a rotating
+  <a target="property" href="/html/tags/html_div_tag.cfm"><code>div</code></a
+  >.
+</p>
+<p>Modify the above code to see what happens when you change the values.</p>
