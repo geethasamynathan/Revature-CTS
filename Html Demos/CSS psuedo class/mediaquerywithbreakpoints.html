@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Query Breakpoints Example</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f6f7fb;
+      }
+
+      header {
+        background: #0b6a3c;
+        color: #fff;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
+      .nav {
+        display: flex;
+        gap: 14px;
+      }
+      .nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 6px 10px;
+        border-radius: 6px;
+      }
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .wrap {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 0 16px;
+      }
+
+      .title {
+        margin: 10px 0 16px;
+        font-size: 22px;
+        color: #0f172a;
+      }
+
+      /* Desktop default: 3 columns */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+      }
+      .card p {
+        margin: 0 0 12px;
+        color: #475569;
+        line-height: 1.4;
+      }
+
+      .btn {
+        display: inline-block;
+        background: #0b6a3c;
+        color: white;
+        padding: 10px 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      /* ===== BREAKPOINT 1: Tablet (≤900px) ===== */
+      @media (max-width: 900px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .grid {
+          grid-template-columns: repeat(2, 1fr); /* 3 → 2 columns */
+        }
+      }
+
+      /* ===== BREAKPOINT 2: Mobile (≤600px) ===== */
+      @media (max-width: 600px) {
+        .grid {
+          grid-template-columns: 1fr; /* 2 → 1 column */
+        }
+        .card {
+          padding: 12px; /* reduce padding */
+        }
+        .btn {
+          display: block; /* button full width */
+          width: 100%;
+        }
+        .nav {
+          flex-wrap: wrap; /* nav wraps to next line */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">ItTechGenie</div>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Courses</a>
+        <a href="#">Quizzes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <div class="wrap">
+      <h2 class="title">Popular Courses</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Azure DevOps</h3>
+          <p>Learn pipelines, boards, repos and real-world CI/CD workflow.</p>
+          <a class="btn" href="#">Start Course</a>
+        </div>
+
+        <div class="card">
+          <h3>React JS</h3>
+          <p>Build modern UI with routing, forms, state management and APIs.</p>
+          <a class="btn" href="#">Start Course</a>
+        </div>
+
+        <div class="card">
+          <h3>SQL Server</h3>
+          <p>
+            Master joins, functions, procedures, performance tuning and more.
+          </p>
+          <a class="btn" href="#">Start Course</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
