@@ -1,0 +1,39 @@
+<form>
+  <label for="number">Change the number</label>
+  <input
+    type="number"
+    id="number"
+    aria-describedby="numberinfo"
+    min="1"
+    max="10"
+    value="15"
+  />
+  <p class="info" id="numberinfo">
+    Change the number to be between 1 and 10 to see the in-range state
+  </p>
+</form>
+<style>
+  :root {
+    --color-mid: #9999;
+  }
+  input:in-range {
+    background: green;
+    color: white;
+  }
+
+  input {
+    min-width: 320px;
+    padding: 0.5rem 1rem;
+    line-height: 1;
+    font: inherit;
+    border: 1px solid var(--color-mid);
+    border-radius: 0.25rem;
+  }
+
+  .info {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-block-start: 0.5em;
+    max-width: 30ch;
+  }
+</style>

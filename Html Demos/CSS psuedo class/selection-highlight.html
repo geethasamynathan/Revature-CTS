@@ -1,0 +1,29 @@
+<p>Jump to:</p>
+<a href="#shipping">Shipping</a> | <a href="#refund">Refund</a> |
+<a href="#support">Support</a>
+
+<div class="faq" id="shipping">🚚 Shipping info...</div>
+<div class="faq" id="refund">💰 Refund info...</div>
+<div class="faq" id="support">📞 Support info...</div>
+
+<style>
+  :root {
+    --highlightBg: #fff7ed;
+    --highlightBorder: #f97316;
+    --normalBorder: #e5e7eb;
+  }
+
+  .faq {
+    font-family: Arial;
+    margin-top: 12px;
+    padding: 12px;
+    border: 2px solid var(--normalBorder);
+    border-radius: 12px;
+  }
+
+  /* ✅ pseudo-class */
+  :target {
+    background: var(--highlightBg);
+    border-color: var(--highlightBorder);
+  }
+</style>

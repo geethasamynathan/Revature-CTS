@@ -1,0 +1,143 @@
+<form class="box">
+  <label class="req">Email</label>
+  <input type="email" placeholder="name@domain.com" required />
+
+  <label class="req">Password</label>
+  <input type="password" placeholder="min 6 chars" minlength="6" required />
+</form>
+
+<style>
+  .box {
+    font-family: Arial;
+    width: 320px;
+  }
+  label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+  }
+
+  /* ✅ pseudo-element */
+  .req::after {
+    content: " *";
+    color: #dc2626;
+    font-weight: 800;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 10px;
+  }
+</style>
+<!-- 
+<p class="links">
+  <a class="ext" href="https://example.com" target="_blank">Company Site</a>
+</p>
+
+<style>
+  .links {
+    font-family: Arial;
+  }
+
+  /* ✅ pseudo-element */
+  a.ext::after {
+    content: " ↗";
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+</style> -->
+<!-- 
+<input class="search" placeholder="Search products..." />
+
+<style>
+  .search {
+    width: 320px;
+    padding: 10px 12px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    font-family: Arial;
+  }
+
+  /* ✅ pseudo-element */
+  .search::placeholder {
+    color: #5c901c;
+    font-style: italic;
+  }
+</style> -->
+<!-- 
+<p class="article">
+  Today we launched a new feature that improves checkout speed and reduces cart
+  abandonment.
+</p>
+
+<style>
+  .article {
+    font-family: Georgia, serif;
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  /* ✅ pseudo-element */
+  .article::first-letter {
+    font-size: 40px;
+    font-weight: 800;
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+  }
+</style> -->
+<!-- 
+<p class="news">
+  Breaking: The service will be under maintenance tonight from 11 PM to 1 AM.
+  Please save your work. More details will be shared on the status page.
+</p>
+
+<style>
+  .news {
+    font-family: Arial;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ✅ pseudo-element */
+  .news::first-line {
+    font-weight: 700;
+    color: red;
+  }
+</style> -->
+
+<!-- <p class="doc">
+  Select this text with your mouse to see custom highlight color.
+</p>
+
+<style>
+  .doc {
+    font-family: Arial;
+  }
+
+  /* ✅ pseudo-element */
+  .doc::selection {
+    background: #fde68a; /* light yellow */
+    color: #111;
+  }
+</style> -->
+<!-- 
+<ul class="tasks">
+  <li>Create invoice</li>
+  <li>Send email</li>
+  <li>Update status</li>
+</ul>
+
+<style>
+  .tasks {
+    font-family: Arial;
+  }
+
+  /* ✅ pseudo-element */
+  .tasks li::marker {
+    content: "✅ ";
+    font-size: 1.1em;
+  }
+</style> -->

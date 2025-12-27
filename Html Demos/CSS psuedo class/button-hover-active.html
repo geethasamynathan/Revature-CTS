@@ -1,0 +1,29 @@
+<button class="pay">Pay Now</button>
+
+<style>
+  :root {
+    --btn: #0b6a3c;
+    --btnHover: #9bdcbc;
+    --btnActive: #71aed3;
+    --text: #ffffff;
+  }
+
+  .pay {
+    font-family: Arial;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--btn);
+    color: var(--text);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .pay:hover {
+    background: var(--btnHover);
+  }
+  .pay:active {
+    background: var(--btnActive);
+    transform: scale(0.98);
+  }
+</style>

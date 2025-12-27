@@ -1,0 +1,27 @@
+<div>
+  <button disabled>I am a button with a disabled state</button>
+  <button>I am an enabled button</button>
+</div>
+<style>
+  button:disabled {
+    background: grey;
+    border-color: rgba(22, 2, 2, 0.405);
+    cursor: not-allowed;
+  }
+
+  button:enabled {
+    border: 5px solid gold;
+  }
+
+  /* button:disabled:hover {
+    box-shadow: none;
+  } */
+
+  /* Presentational styles */
+  div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+</style>

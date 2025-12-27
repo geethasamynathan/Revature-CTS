@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <label>
+    <input type="checkbox" id="all" onchange="toggleAll(this)" />
+    Check all
+  </label>
+
+  <hr />
+
+  <label>
+    <input type="checkbox" class="child" onchange="updateAllState()" />
+    Toggle me
+  </label>
+
+  <label>
+    <input type="checkbox" class="child" onchange="updateAllState()" />
+    Toggle me too
+  </label>
+</div>
+
+<style>
+  :indeterminate {
+    box-shadow: 0px 0px 5px 2px orange;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin: 6px 0;
+  }
+
+  hr {
+    max-width: 300px;
+    margin: 1em 0 !important;
+  }
+</style>
+
+<script>
+  function toggleAll(allBox) {
+    const children = document.querySelectorAll(".child");
+    children.forEach((cb) => (cb.checked = allBox.checked));
+
+    // When user clicks "all", it should never be indeterminate
+    allBox.indeterminate = false;
+  }
+
+  function updateAllState() {
+    const allBox = document.getElementById("all");
+    const children = document.querySelectorAll(".child");
+
+    const checkedCount = [...children].filter((cb) => cb.checked).length;
+
+    if (checkedCount === 0) {
+      allBox.checked = false;
+      allBox.indeterminate = false;
+    } else if (checkedCount === children.length) {
+      allBox.checked = true;
+      allBox.indeterminate = false;
+    } else {
+      allBox.checked = false; // common UI behavior
+      allBox.indeterminate = true;
+    }
+  }
+</script>
