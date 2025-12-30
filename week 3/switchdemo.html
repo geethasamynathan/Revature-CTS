@@ -1,0 +1,27 @@
+<script>
+  let num1, num2;
+  let result, operation;
+
+  num1 = parseInt(prompt("enter the First Number"));
+  num2 = parseInt(prompt("enter the First Number"));
+  operation = prompt("enter the operation + , - , *, /");
+
+  switch (operation) {
+    case "+":
+      result = num1 + num2;
+      break;
+    case "-":
+      result = num1 - num2;
+      break;
+    case "*":
+      result = num1 * num2;
+      break;
+    case "/":
+      result = num1 / num2;
+      break;
+    default:
+      console.log("Invalid entry");
+      break;
+  }
+  alert(result);
+</script>

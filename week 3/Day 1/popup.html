@@ -1,0 +1,38 @@
+<html>
+  <body>
+    <h1>alert ,confirm and Prompt Example</h1>
+    <div>
+      <button onclick="showAlert()">Show alert Box.</button>
+      <br />
+      <p>Alert box which showing the message with ok button</p>
+    </div>
+    <div>
+      <button onclick="showConfirm()">Show confirm Box.</button>
+      <br />
+      <p>Confirm box which showing the message with ok and cancel button</p>
+    </div>
+    <div>
+      <button onclick="showPrompt()">Show Prompt Box.</button>
+      <br />
+      <p>
+        Proompt box which showing the message and it takes the input from user
+      </p>
+    </div>
+    <script>
+      function showAlert() {
+        alert("I am alert box");
+      }
+      function showConfirm() {
+        if (confirm("Do you want the changes to save?")) {
+          console.log("File Saved");
+        } else {
+          console.log("changes not saved");
+        }
+      }
+      function showPrompt() {
+        eid = prompt("I am Prompt box.Ple enter Employee id");
+        console.log("Entered Employee id is " + eid);
+      }
+    </script>
+  </body>
+</html>

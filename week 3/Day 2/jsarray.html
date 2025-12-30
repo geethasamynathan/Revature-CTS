@@ -1,0 +1,42 @@
+<html>
+  <head> </head>
+  <body>
+    <ul id="item1"></ul>
+  </body>
+  <script>
+    // let items = new Array();
+
+    let itemslist = ["mouse", "touchpad", "keyboard", "monitor"];
+
+    ProductsByPrice = products.sort((p) => p.price);
+    let ulelement = document.getElementById("item1");
+    // for (let item of itemslist) {
+    //   //create new html li tag
+    //   const listitem = document.createElement("li");
+    //   //li tag we are assignning the content
+    //   listitem.textContent = item;
+    //   ulelement.appendChild(listitem);
+    // }
+
+    itemslist.forEach((item) => {
+      const listitem = document.createElement("li");
+      //li tag we are assignning the content
+      listitem.textContent = item;
+      ulelement.appendChild(listitem);
+    });
+    // document.write(i + "<br/>");
+    // }
+
+    // mix of values
+    let arr = [
+      "Apple",
+      { name: "John" },
+      true,
+      function () {
+        alert("hello");
+      },
+    ];
+
+    //alert(arr[1].name);
+  </script>
+</html>
