@@ -1,0 +1,66 @@
+<head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 20px;
+    }
+
+    .box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .help {
+      background: #f0f8ff;
+    }
+
+    .admin {
+      background: #fff3cd;
+    }
+  </style>
+</head>
+<body>
+  <h2>User Register</h2>
+
+  <label> Select Role:</label>
+  <select onchange="handleRoleChange(this.value)">
+    <option value="">--Select --</option>
+    <option values="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <div id="adminBox" class="box admin">
+    <h3>Admin Details</h3>
+    <label> Admin Code:</label>
+    <input type="text" />
+  </div>
+
+  <button onclick="toggleHelp()">Toggle help</button>
+  <div id="helpBox" class="box help">
+    <p>
+      - password should be strong - Admin need approval -Email must be valid
+    </p>
+  </div>
+
+  <script>
+    function handleRoleChange(role) {
+      let adminBox = document.getElementById("adminBox");
+      if (role === "admin") {
+        adminBox.style.display = "block";
+      } else {
+        adminBox.style.display = "none";
+      }
+    }
+
+    function toggleHelp() {
+      let help = document.getElementById("helpBox");
+      if (help.style.display === "none" || help.style.display === "") {
+        help.style.display = "block";
+      } else {
+        help.style.display = "none";
+      }
+    }
+  </script>
+</body>
