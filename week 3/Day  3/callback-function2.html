@@ -1,0 +1,13 @@
+//Example for callback with Event
+<body>
+  <button onclick="handleClick(showMessage)">click me</button>
+
+  <script>
+    function showMessage() {
+      alert("Button clicked");
+    }
+    function handleClick(callback) {
+      callback();
+    }
+  </script>
+</body>
