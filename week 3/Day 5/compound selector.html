@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("p.mark").css("color", "maroon");
+        $("ul li").css("border", "1px dashed red");
+        $("ul#mark li").css("background", "lightyellow");
+        $("ul.mark li").css("background", "lightgreen");
+        $('a[target="_blank"]').css("background", "pink");
+      });
+    </script>
+  </head>
+  <body>
+    <p>this is paragragh</p>
+    <p class="mark">Second paragragh</p>
+    <p>Third paragragh</p>
+    <ul>
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+    <ul id="mark">
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+    <ul class="mark">
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+
+    <p>
+      for more jquery exampls visit
+      <a href="#" target="_blank"> www.example.com</a>
+    </p>
+  </body>
+</html>

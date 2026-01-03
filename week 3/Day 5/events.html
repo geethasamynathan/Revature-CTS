@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <style>
+      p {
+        padding: 20px;
+        background-color: aquamarine;
+        color: blueviolet;
+        font: 20px Arial;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        // $("p").click(function () {
+        $("p").dblclick(function () {
+          $(this).slideUp();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <p>Welcome to jQuery Concept</p>
+    <p>Welcome to jQuery Concept</p>
+    <p>Welcome to jQuery Concept</p>
+  </body>
+</html>
