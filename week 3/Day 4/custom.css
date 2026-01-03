@@ -1,0 +1,15 @@
+:root{
+    --bs-primary:#0a7c3a;
+}
+
+.btn-primary{
+    background-color:var(--bs-primary);
+    border-color:#0c7e3c;
+    color:white;
+}
+
+.card-highlight{
+    border-left:5px solid #06defd;
+    background-color: #d2e490;
+    padding:1rem;
+}
