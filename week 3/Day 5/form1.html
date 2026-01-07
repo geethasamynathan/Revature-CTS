@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple AJAX POST Example</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#myForm").submit(function (e) {
+          e.preventDefault(); // stop normal form submit
+
+          $.ajax({
+            url: "result.php",
+            type: "POST",
+            data: {
+              name: $("#name").val(),
+              message: $("#message").val(),
+            },
+            success: function (response) {
+              $("#result").html(response); // show result
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h2>Feedback Form</h2>
+
+    <form id="myForm">
+      <label>
+        Name:
+        <input type="text" id="name" required /> </label
+      ><br /><br />
+
+      <label>
+        Message:
+        <textarea id="message" required></textarea></label
+      ><br /><br />
+
+      <button type="submit">Send</button>
+    </form>
+
+    <hr />
+
+    <div id="result"></div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AJAX Result</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        margin: 30px;
+      }
+      .box {
+        border: 1px solid #aaa;
+        padding: 15px;
+        width: 400px;
+      }
+    </style>
+
+    <script>
+      window.onload = function () {
+        let data = JSON.parse(localStorage.getItem("formData"));
+
+        if (data) {
+          document.getElementById("name").innerText = data.name;
+          document.getElementById("comment").innerText = data.comment;
+        }
+      };
+    </script>
+  </head>
+
+  <body>
+    <h2>Submitted Data</h2>
+
+    <div class="box">
+      <p><strong>Name:</strong> <span id="name"></span></p>
+      <p><strong>Comment:</strong></p>
+      <p id="comment"></p>
+    </div>
+  </body>
+</html>
