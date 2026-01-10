@@ -1,0 +1,639 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Sat Jan 10 09:13:11 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri Jan 09 2026 09:44:26 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> create or replace function get_sal
+  2  (p_emp_id number)
+  3  return number
+  4  is
+  5  v_sal number;
+  6  begin
+  7    select salary into v_sal
+  8    from employees
+  9    where employee_id=p_emp_id;
+ 10
+ 11    return v_sal;
+ 12  end;
+ 13  /
+
+Function created.
+
+SQL> declare
+  2  v_sal number;
+  3  begin
+  4  v_sal:=get_sal(100);
+  5  dbms_output.put_line (v_sal);
+  6  end;
+  7  /
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at "SYSTEM.GET_SAL", line 7
+ORA-06512: at line 4
+
+
+SQL> set serveroutput on;
+SQL>  declare
+  2    2  v_sal number;
+  3    3  begin
+  4    4  v_sal:=get_sal(100);
+  5    5  dbms_output.put_line (v_sal);
+  6    6  end;
+  7    7  /
+  8  ;
+  9  /
+  2  v_sal number;
+  *
+ERROR at line 2:
+ORA-06550: line 2, column 3:
+PLS-00103: Encountered the symbol "2" when expecting one of the following:
+begin function pragma procedure subtype type <an identifier>
+<a double-quoted delimited-identifier> current cursor delete
+exists prior
+
+
+SQL> declare
+  2  v_sal number;
+  3  begin
+  4  v_sal:=get_sal(100);
+  5  dbms_output.put_line (v_sal);
+  6  end;
+  7  /
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at "SYSTEM.GET_SAL", line 7
+ORA-06512: at line 4
+
+
+SQL> DECLARE
+  2    v_sal NUMBER;
+  3  BEGIN
+  4    v_sal := get_sal(100);
+  5    dbms_output.put_line(v_sal);
+  6  END;
+  7  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at "SYSTEM.GET_SAL", line 7
+ORA-06512: at line 4
+
+
+SQL> SET SERVEROUTPUT ON;
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> create or replace function get_sal
+  2  (p_emp_id number)
+  3  return number
+  4  is
+  5  v_sal number;
+  6  begin
+  7    select salary into v_sal
+  8    from employees
+  9    where employee_id=p_emp_id;
+ 10
+ 11    return v_sal;
+ 12  end;
+ 13  /
+
+Function created.
+
+SQL> declare
+  2  v_sal number;
+  3  begin
+  4  v_sal:=get_sal(100);
+  5  dbms_output.put_line (v_sal);
+  6  end;
+  7  /
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at "SYSTEM.GET_SAL", line 7
+ORA-06512: at line 4
+
+
+SQL> declare
+  2  v_sal number;
+  3  begin
+  4  v_sal:=get_sal(1011);
+  5  dbms_output.put_line (v_sal);
+  6  end;
+  7  /
+55000
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM employees WHERE department_id = &dept_id;
+Enter value for dept_id: 1012
+old   1: SELECT * FROM employees WHERE department_id = &dept_id
+new   1: SELECT * FROM employees WHERE department_id = 1012
+SELECT * FROM employees WHERE department_id = 1012
+                              *
+ERROR at line 1:
+ORA-00904: "DEPARTMENT_ID": invalid identifier
+
+
+SQL> SELECT * FROM employees WHERE EMPLOYEE_id = &EMP_id;
+Enter value for emp_id: 1012
+old   1: SELECT * FROM employees WHERE EMPLOYEE_id = &EMP_id
+new   1: SELECT * FROM employees WHERE EMPLOYEE_id = 1012
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+
+SQL> create or replace function get_sal
+  2  (p_emp_id number)
+  3  return number
+  4  is
+  5  v_sal number;
+  6  begin
+  7  select salary into v_sal
+  8  from employees
+  9  where employee_id=p_emp_id;
+ 10  return v_sal;
+ 11  end;
+ 12  /
+
+Function created.
+
+SQL> SELECT GET_SAL(1012) FROM DUAL;
+
+GET_SAL(1012)
+-------------
+        12000
+
+SQL> SELECT GET_SAL(1008) FROM DUAL;
+
+GET_SAL(1008)
+-------------
+        67000
+
+SQL> BEGIN
+  2  DBMS_OUTPUT_PUT_LINE(GET_SAL(1002));
+  3  END;
+  4  /
+DBMS_OUTPUT_PUT_LINE(GET_SAL(1002));
+*
+ERROR at line 2:
+ORA-06550: line 2, column 1:
+PLS-00201: identifier 'DBMS_OUTPUT_PUT_LINE' must be declared
+ORA-06550: line 2, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE(GET_SAL(1002));
+  3  END;
+  4  /
+35000
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION get_sal_tax
+  2  (p_sal number)
+  3  return number
+  4  is
+  5  BEGIN
+  6  if p_sal<10000 then
+  7  return p_sal*(10/100);
+  8  else
+  9  return p_sal*(15/100);
+ 10  end if
+ 11  end;
+ 12  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION get_sal_tax
+  2    2  (p_sal number)
+  3    3  return number
+  4    4  is
+  5    5  BEGIN
+  6    6  if p_sal<10000 then
+  7    7  return p_sal*(10/100);
+  8    8  else
+  9    9  return p_sal*(15/100);
+ 10   10  end if;
+ 11  end;
+ 12  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION get_sal_tax
+  2  (p_sal NUMBER)
+  3  RETURN NUMBER
+  4  IS
+  5  BEGIN
+  6    IF p_sal < 10000 THEN
+  7      RETURN p_sal * (10/100);
+  8    ELSE
+  9      RETURN p_sal * (15/100);
+ 10    END IF;
+ 11
+ 12  END;
+ 13  /
+
+Function created.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,NAME,DEPARTMENT,SALARY,get_sal_tax(salary) from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+GET_SAL_TAX(SALARY)
+-------------------
+       1001 Sambit               IT                        15500
+               2325
+
+       1002 Santosh              IT                        35000
+               5250
+
+       1003 Manoj                HR                        17000
+               2550
+
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+GET_SAL_TAX(SALARY)
+-------------------
+       1004 Rakesh               Payroll                   37000
+               5550
+
+       1005 Hina                 IT                        42000
+               6300
+
+       1006 Bikash               HR                        15000
+               2250
+
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+GET_SAL_TAX(SALARY)
+-------------------
+       1007 Priya                HR                        67000
+              10050
+
+       1008 Preety               Payroll                   67000
+              10050
+
+       1009 Priyanka             Payroll                   55000
+               8250
+
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+GET_SAL_TAX(SALARY)
+-------------------
+       1010 Anurag               Payroll                   15000
+               2250
+
+       1011 Rishav               HR                        55000
+               8250
+
+       1012 Ram                  HR                        12000
+               1800
+
+
+12 rows selected.
+
+SQL> set lines 200;
+SQL> SELECT EMPLOYEE_ID,NAME,DEPARTMENT,SALARY,get_sal_tax(salary) from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY GET_SAL_TAX(SALARY)
+----------- -------------------- -------------------- ---------- -------------------
+       1001 Sambit               IT                        15500                2325
+       1002 Santosh              IT                        35000                5250
+       1003 Manoj                HR                        17000                2550
+       1004 Rakesh               Payroll                   37000                5550
+       1005 Hina                 IT                        42000                6300
+       1006 Bikash               HR                        15000                2250
+       1007 Priya                HR                        67000               10050
+       1008 Preety               Payroll                   67000               10050
+       1009 Priyanka             Payroll                   55000                8250
+       1010 Anurag               Payroll                   15000                2250
+       1011 Rishav               HR                        55000                8250
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY GET_SAL_TAX(SALARY)
+----------- -------------------- -------------------- ---------- -------------------
+       1012 Ram                  HR                        12000                1800
+
+12 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,NAME,DEPARTMENT,SALARY,get_sal_tax(p_sal =>salary) from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY GET_SAL_TAX(P_SAL=>SALARY)
+----------- -------------------- -------------------- ---------- --------------------------
+       1001 Sambit               IT                        15500                       2325
+       1002 Santosh              IT                        35000                       5250
+       1003 Manoj                HR                        17000                       2550
+       1004 Rakesh               Payroll                   37000                       5550
+       1005 Hina                 IT                        42000                       6300
+       1006 Bikash               HR                        15000                       2250
+       1007 Priya                HR                        67000                      10050
+       1008 Preety               Payroll                   67000                      10050
+       1009 Priyanka             Payroll                   55000                       8250
+       1010 Anurag               Payroll                   15000                       2250
+       1011 Rishav               HR                        55000                       8250
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY GET_SAL_TAX(P_SAL=>SALARY)
+----------- -------------------- -------------------- ---------- --------------------------
+       1012 Ram                  HR                        12000                       1800
+
+12 rows selected.
+
+SQL> set pagesize 0;
+SQL> SELECT EMPLOYEE_ID,NAME,DEPARTMENT,SALARY,get_sal_tax(p_sal =>salary) from employees;
+       1001 Sambit               IT                        15500                       2325
+       1002 Santosh              IT                        35000                       5250
+       1003 Manoj                HR                        17000                       2550
+       1004 Rakesh               Payroll                   37000                       5550
+       1005 Hina                 IT                        42000                       6300
+       1006 Bikash               HR                        15000                       2250
+       1007 Priya                HR                        67000                      10050
+       1008 Preety               Payroll                   67000                      10050
+       1009 Priyanka             Payroll                   55000                       8250
+       1010 Anurag               Payroll                   15000                       2250
+       1011 Rishav               HR                        55000                       8250
+       1012 Ram                  HR                        12000                       1800
+
+12 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,NAME,DEPARTMENT,SALARY,get_sal_tax(p_sal =>salary) from employees where get_sal_tax(salary)>5000 order by get_sal_tax(salary);
+       1002 Santosh              IT                        35000                       5250
+       1004 Rakesh               Payroll                   37000                       5550
+       1005 Hina                 IT                        42000                       6300
+       1009 Priyanka             Payroll                   55000                       8250
+       1011 Rishav               HR                        55000                       8250
+       1008 Preety               Payroll                   67000                      10050
+       1007 Priya                HR                        67000                      10050
+
+7 rows selected.
+
+SQL> select * from v$databse;
+select * from v$databse
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select name from v$databse;
+select name from v$databse
+                 *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT name FROM v$database;
+XE
+
+SQL> select object_name as FUNCTION_NAME,STATUS FROM USER_OBJECTS WHERE OBJECT_TYPE='FUNCTION' ORDER BY OBJECT_NAME;
+GET_SAL                                                                                                                          VALID
+GET_SAL_TAX                                                                                                                      VALID
+LOGMNR$COL_GG_TABF_PUBLIC                                                                                                        VALID
+LOGMNR$GSBA_GG_TABF_PUBLIC                                                                                                       VALID
+LOGMNR$KEY_GG_TABF_PUBLIC                                                                                                        VALID
+LOGMNR$SEQ_GG_TABF_PUBLIC                                                                                                        VALID
+LOGMNR$TAB_GG_TABF_PUBLIC                                                                                                        VALID
+LOGMNR$USER_GG_TABF_PUBLIC                                                                                                       VALID
+
+8 rows selected.
+
+SQL> SELECT * FROM TEST;
+
+no rows selected
+
+SQL> DROP TABLE TEST;
+
+Table dropped.
+
+SQL> Create table test
+  2  (emp_id number,
+  3   ename varchar2(100)
+  4  );
+
+Table created.
+
+SQL> INSERT INTO TEST VALUES(1,'GEM');
+
+1 row created.
+
+SQL> INSERT INTO TEST VALUES(2,'PEM');
+
+1 row created.
+
+SQL> CREATE OR REPLACE TRIGGER TEST_BEFORE_UPDATE
+  2  BEFORE UPDATE
+  3  ON TEST
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE(' TRIGGER EXECUTED BEFORE UPDATE');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> select object_name as TRIGGER_NAME,STATUS FROM USER_OBJECTS WHERE OBJECT_TYPE='TRIGGER' ORDER BY OBJECT_NAME;
+TEST_BEFORE_UPDATE                                                                                                               VALID
+
+SQL> SELECT * FROM TEST;
+         1 GEM
+         2 PEM
+
+SQL> UPDATE TEST SET ENAME='sAM' WHERE EMP_ID=1;
+TRIGGER EXECUTED BEFORE UPDATE
+
+1 row updated.
+
+SQL> UPDATE TEST SET ENAME='sAM' WHERE EMP_ID=10;
+TRIGGER EXECUTED BEFORE UPDATE
+
+0 rows updated.
+
+SQL> SELECT * FROM empoyees;
+SELECT * FROM empoyees
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT * FROM employees;
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> CREATE OR REPLACE TRIGGER check_salary
+  2  before
+  3  insert or update of salary
+  4  ;
+  5  /
+;
+*
+ERROR at line 4:
+ORA-00969: missing ON keyword
+
+
+SQL> CREATE OR REPLACE TRIGGER CAHCK_SALARY
+  2  BEFORE
+  3  INSERT OR UPDATE OF SALARY
+  4  ON EMPLOYEES
+  5  FOR EACH ROW
+  6  BEGIN
+  7  IF :NEW.SAALRY<15000 THEN
+  8  RAISE_APPLICATION_ERROR(-20030,'MIN SALARY IS 15000');
+  9  END IF;
+ 10  END;/
+ 11  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> CREATE OR REPLACE TRIGGER CAHCK_SALARY
+  2      BEFORE
+  3      INSERT OR UPDATE OF SALARY
+  4    ON EMPLOYEES
+  5      FOR EACH ROW
+  6     BEGIN
+  7      IF :NEW.SAALRY<15000 THEN
+  8     RAISE_APPLICATION_ERROR(-20030,'MIN SALARY IS 15000');
+  9      END IF;
+ 10    END;
+ 11     /
+
+Warning: Trigger created with compilation errors.
+
+SQL> SELECT * FROM EMPLOYEES;
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> CREATE OR REPLACE TRIGGER CAHCK_SALARY
+  2      BEFORE
+  3      INSERT OR UPDATE OF SALARY
+  4    ON EMPLOYEES
+  5      FOR EACH ROW
+  6     BEGIN
+  7      IF :NEW.SALRY<15000 THEN
+  8     RAISE_APPLICATION_ERROR(-20030,'MIN SALARY IS 15000');
+  9      END IF;
+ 10    END;
+ 11     /
+
+Warning: Trigger created with compilation errors.
+
+SQL> CREATE OR REPLACE TRIGGER cahck_salary
+  2  BEFORE INSERT OR UPDATE OF salary
+  3  ON employees
+  4  FOR EACH ROW
+  5  BEGIN
+  6    IF :NEW.salary < 15000 THEN
+  7      RAISE_APPLICATION_ERROR(-20030, 'MIN SALARY IS 15000');
+  8    END IF;
+  9  END;
+ 10  /
+
+Trigger created.
+
+SQL> INSERT INTO EMPLOYEES VALUES (1013,'kALAI','ADMIN',1200);
+INSERT INTO EMPLOYEES VALUES (1013,'kALAI','ADMIN',1200)
+            *
+ERROR at line 1:
+ORA-20030: MIN SALARY IS 15000
+ORA-06512: at "SYSTEM.CAHCK_SALARY", line 3
+ORA-04088: error during execution of trigger 'SYSTEM.CAHCK_SALARY'
+
+
+SQL> INSERT INTO EMPLOYEES VALUES (1013,'kALAI','ADMIN',16000);
+
+1 row created.
+
+SQL> UPDATE EMPLOYEES SET SALARY=1000 WHERE EMPLOYEE_ID=1001;
+UPDATE EMPLOYEES SET SALARY=1000 WHERE EMPLOYEE_ID=1001
+       *
+ERROR at line 1:
+ORA-20030: MIN SALARY IS 15000
+ORA-06512: at "SYSTEM.CAHCK_SALARY", line 3
+ORA-04088: error during execution of trigger 'SYSTEM.CAHCK_SALARY'
+
+
+SQL> UPDATE EMPLOYEES SET SALARY=30000 WHERE EMPLOYEE_ID=1001;
+
+1 row updated.
+
+SQL>/
