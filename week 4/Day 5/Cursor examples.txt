@@ -1,0 +1,112 @@
+Implicit Cursor:
+================
+
+DECLARE
+    rows_updated NUMBER;
+BEGIN
+    -- Implicit cursor used internally by Oracle for this UPDATE statement
+    UPDATE employees
+    SET salary = 55000
+    WHERE employee_id in (1001,1005,1007);
+
+    -- Accessing implicit cursor attributes
+    rows_updated := SQL%ROWCOUNT;
+
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Update successful: ' || rows_updated || ' row(s) updated.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('No rows updated.');
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An error occurred.');
+END;
+/
+
+
+
+--------------------------------------------------------------------------------------------
+Explicit Cursor
+==============
+DECLARE
+    -- 1. Declare variables to hold the fetched data
+    v_employee_id employees.employee_id%TYPE;
+    v_name  employees.name%TYPE;
+    v_salary      employees.salary%TYPE;
+
+    -- 2. Declare the explicit cursor
+    CURSOR emp_cursor IS
+        SELECT employee_id, name, salary
+        FROM employees;
+BEGIN
+    -- 3. Open the cursor
+    OPEN emp_cursor;
+
+    LOOP
+        -- 4. Fetch the next row into variables
+        FETCH emp_cursor INTO v_employee_id, v_name, v_salary;
+
+        -- Exit the loop when no more rows are found
+        EXIT WHEN emp_cursor%NOTFOUND;
+
+        -- Process the fetched data
+        DBMS_OUTPUT.PUT_LINE('ID: ' || v_employee_id || ', Name: ' || v_name || ', Salary: ' || v_salary);
+    END LOOP;
+
+    -- 5. Close the cursor
+    CLOSE emp_cursor;
+END;
+/
+
+
+===========================================================================================
+parameterised cursor
+===================
+SET SERVEROUTPUT ON;
+
+DECLARE
+  -- Parameterised cursor: takes department as input
+  CURSOR c_emp_by_dept(p_deptname employees.department%TYPE) IS
+    SELECT employee_id, name, department, salary
+    FROM employees
+    WHERE department = p_deptname
+    ORDER BY employee_id;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Employees in IT Department:');
+
+  FOR r IN c_emp_by_dept('IT') LOOP
+    DBMS_OUTPUT.PUT_LINE(
+      r.employee_id || ' | ' || r.name || ' | ' || r.department || ' | ' || r.salary
+    );
+  END LOOP;
+END;
+/
+
+==================================================================================================
+RefCursor
+=========
+
+
+CREATE OR REPLACE PROCEDURE get_emp_by_dept
+(
+  p_dept IN  VARCHAR2,
+  p_rc   OUT SYS_REFCURSOR
+)
+AS
+BEGIN
+  OPEN p_rc FOR
+    SELECT employee_id, name, department, salary
+    FROM employees
+    WHERE department = p_dept
+    ORDER BY employee_id;
+END;
+/
+
+
+
+
+VAR rc REFCURSOR
+EXEC get_emp_by_dept('Payroll', :rc)
+PRINT rc
+
+====
