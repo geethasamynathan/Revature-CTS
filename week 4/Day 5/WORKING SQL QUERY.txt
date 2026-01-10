@@ -637,3 +637,804 @@ SQL> UPDATE EMPLOYEES SET SALARY=30000 WHERE EMPLOYEE_ID=1001;
 1 row updated.
 
 SQL>/
+
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Sat Jan 10 10:57:06 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Sat Jan 10 2026 09:13:18 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> select * from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> CREATE TABLE EMP_SALARY_AUDIT
+  2  (
+  3  EMP_ID NUMBER,
+  4  OPERATION VARCHAR(50),
+  5  OLD_SAL NUMBER,
+  6  NEW_SAL NUMBER
+  7  BY_USER VARCHAR2(15));
+BY_USER VARCHAR2(15))
+*
+ERROR at line 7:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE EMP_SALARY_AUDIT
+  2  (
+  3  EMP_ID NUMBER,
+  4  OPERATION VARCHAR(50),
+  5  NEW_SAL NUMBER
+  6  BY_USER VARCHAR2(15));;
+BY_USER VARCHAR2(15));
+*
+ERROR at line 6:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE EMP_SALARY_AUDIT
+  2  (
+  3    EMP_ID NUMBER
+  4    OPERATION VARCHAR2(100),
+  5    OLD_SAL NUMBER,
+  6    NEW_SAL NUMBER,
+  7    OP_DATE DATE,
+  8    BY_USER VARCHAR2(100)
+  9  );
+  OPERATION VARCHAR2(100),
+  *
+ERROR at line 4:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE EMP_SALARY_AUDIT
+  2  (
+  3    EMP_ID NUMBER,
+  4    OPERATION VARCHAR2(50),
+  5    OLD_SAL NUMBER,
+  6    NEW_SAL NUMBER,
+  7    OP_DATE DATE,
+  8    BY_USER VARCHAR2(15)
+  9  );
+
+Table created.
+
+SQL> create or replace trigger emp_sal_audit
+  2  after insert or update of salary or delete
+  3  on employees
+  4  for each row
+  5  begin
+  6    if inserting then
+  7    insert into EMP_SALARY_AUDIT(EMP_ID, OPERATION,OLD_SAL, NEW_SAL, OP_DATE, BY_USER)
+  8    values (:new.employee_id,'Inserting',null,:new.salary,sysdate,user);
+  9    end if;
+ 10
+ 11    if updating then
+ 12    insert into EMP_SALARY_AUDIT(EMP_ID,OPERATION,OLD_SAL,NEW_SAL,OP_DATE,BY_USER)
+ 13    values (:old.employee_id,'updating',:old.salary,:new.salary,sysdate,user);
+ 14    end if;
+ 15
+ 16    if deleting then
+ 17    insert into EMP_SALARY_AUDIT(EMP_ID,OPERATION,OLD_SAL,NEW_SAL,OP_DATE,BY_USER)
+ 18    values (:old.employee_id,'deleting',:old.salary,null,sysdate,user);
+ 19    end if;
+ 20  end;
+ 21  /
+
+Trigger created.
+
+SQL> seelct * from emp_sal_audit;
+SP2-0734: unknown command beginning "seelct * f..." - rest of line ignored.
+SQL> select * from emp_sal_audit;
+select * from emp_sal_audit
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from emp_salary_audit;
+
+no rows selected
+
+SQL> select * from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        17000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+
+12 rows selected.
+
+SQL> insert into employees values(1013,'Harish','IT',34000);
+
+1 row created.
+
+SQL> select * from emp_salary_audit;
+
+    EMP_ID OPERATION                                             OLD_SAL
+---------- -------------------------------------------------- ----------
+   NEW_SAL OP_DATE   BY_USER
+---------- --------- ---------------
+      1013 Inserting
+     34000 10-JAN-26 SYSTEM
+
+
+SQL> set lines 200;
+SQL> select * from emp_salary_audit;
+
+    EMP_ID OPERATION                                             OLD_SAL    NEW_SAL OP_DATE   BY_USER
+---------- -------------------------------------------------- ---------- ---------- --------- ---------------
+      1013 Inserting                                                          34000 10-JAN-26 SYSTEM
+
+SQL> update employees set salary=78000 where employee_id=1003;
+
+1 row updated.
+
+SQL> select * from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        78000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+       1013 Harish               IT                        34000
+
+13 rows selected.
+
+SQL> select * from emp_salary_audit;
+
+    EMP_ID OPERATION                                             OLD_SAL    NEW_SAL OP_DATE   BY_USER
+---------- -------------------------------------------------- ---------- ---------- --------- ---------------
+      1013 Inserting                                                          34000 10-JAN-26 SYSTEM
+      1003 updating                                                17000      78000 10-JAN-26 SYSTEM
+
+SQL> delete from employee where employee_id=1013;
+delete from employee where employee_id=1013
+                           *
+ERROR at line 1:
+ORA-00904: "EMPLOYEE_ID": invalid identifier
+
+
+SQL> delete from employees where employee_id=1013;
+
+1 row deleted.
+
+SQL> select * from emp_salary_audit;
+
+    EMP_ID OPERATION                                             OLD_SAL    NEW_SAL OP_DATE   BY_USER
+---------- -------------------------------------------------- ---------- ---------- --------- ---------------
+      1013 Inserting                                                          34000 10-JAN-26 SYSTEM
+      1003 updating                                                17000      78000 10-JAN-26 SYSTEM
+      1013 deleting                                                34000            10-JAN-26 SYSTEM
+
+SQL> select * from customers
+  2  ;
+
+CUSTOMER_ID CUSTOMER_NAME                                      CREATED_O
+----------- -------------------------------------------------- ---------
+       1000 Arun Kumar                                         06-JAN-26
+
+SQL> drop table customers;
+drop table customers
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> Create table customers
+  2  (
+  3    cust_id number,
+  4    Name varchar2(100),
+  5    Status char(1)
+  6  );
+Create table customers
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table customers;
+drop table customers
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> Create table customer
+  2  (
+  3    cust_id number,
+  4    Name varchar2(100),
+  5    Status char(1)
+  6  );
+
+Table created.
+
+SQL> create or replace trigger customer_default_status
+  2  Before insert
+  3  on Customer
+  4  for each row
+  5  Begin
+  6  :new.status='A'
+  7  END;
+  8  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> show errror
+SP2-0158: unknown SHOW option "errror"
+SQL> show error;
+Errors for TRIGGER CUSTOMER_DEFAULT_STATUS:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+2/12     PLS-00103: Encountered the symbol "=" when expecting one of the
+         following:
+         := . ( @ % ; indicator
+
+SQL> Create or replace trigger customer_default_status
+  2  Before insert
+  3  On customer
+  4  For each row
+  5  Begin
+  6  :new.status=’A’;
+  7  End;
+  8  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> CREATE OR REPLACE TRIGGER customer_default_status
+  2  BEFORE INSERT
+  3  ON customer
+  4  FOR EACH ROW
+  5  BEGIN
+  6    :NEW.status := 'A';
+  7  END;
+  8  /
+
+Trigger created.
+
+SQL> desc customer;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ CUST_ID                                                                                                                    NUMBER
+ NAME                                                                                                                       VARCHAR2(100)
+ STATUS                                                                                                                     CHAR(1)
+
+SQL> insert into customer (cust_id,name) from customer;
+insert into customer (cust_id,name) from customer
+                                    *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword
+
+
+SQL> insert into customer (cust_id,name) values (1,'customer1');
+
+1 row created.
+
+SQL> select * from customer;
+
+   CUST_ID NAME                                                                                                 S
+---------- ---------------------------------------------------------------------------------------------------- -
+         1 customer1                                                                                            A
+
+SQL> create or replace view vw_emp AS
+  2  SELECT EMPLOYEE_ID,NAME,DEPARTMENT FROM EMPLOYEES;
+
+View created.
+
+SQL> SELECT * FROM VE_EMP;
+SELECT * FROM VE_EMP
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT * FROM VW_EMP;
+
+EMPLOYEE_ID NAME                 DEPARTMENT
+----------- -------------------- --------------------
+       1001 Sambit               IT
+       1002 Santosh              IT
+       1003 Manoj                HR
+       1004 Rakesh               Payroll
+       1005 Hina                 IT
+       1006 Bikash               HR
+       1007 Priya                HR
+       1008 Preety               Payroll
+       1009 Priyanka             Payroll
+       1010 Anurag               Payroll
+       1011 Rishav               HR
+
+EMPLOYEE_ID NAME                 DEPARTMENT
+----------- -------------------- --------------------
+       1012 Ram                  HR
+
+12 rows selected.
+
+SQL> INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT) VALUES (1013,'Kiran','IT');
+
+1 row created.
+
+SQL> select * from employees;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        78000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+       1013 Kiran                IT
+
+13 rows selected.
+
+SQL> INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT,salary) VALUES (1013,'Kiran','IT',16000);
+INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT,salary) VALUES (1013,'Kiran','IT',16000)
+                                                *
+ERROR at line 1:
+ORA-00904: "SALARY": invalid identifier
+
+
+SQL> drop table dept;
+
+Table dropped.
+
+SQL> drop table emp;
+
+Table dropped.
+
+SQL> CREATE TABLE dept (
+  2    dept_id    NUMBER PRIMARY KEY,
+  3    dept_name  VARCHAR2(30) NOT NULL,
+  4    location   VARCHAR2(30)
+  5  );
+
+Table created.
+
+SQL> CREATE TABLE emp (
+  2    emp_id     NUMBER PRIMARY KEY,
+  3    emp_name   VARCHAR2(30) NOT NULL,
+  4    job        VARCHAR2(30),
+  5    salary     NUMBER(10,2),
+  6    dept_id    NUMBER,
+  7    CONSTRAINT fk_emp_dept FOREIGN KEY (dept_id) REFERENCES dept(dept_id)
+  8  );
+
+Table created.
+
+SQL> INSERT INTO dept (dept_id, dept_name, location) VALUES (10, 'IT',       'Chennai');
+
+1 row created.
+
+SQL> INSERT INTO dept (dept_id, dept_name, location) VALUES (20, 'HR',       'Bangalore');
+
+1 row created.
+
+SQL> INSERT INTO dept (dept_id, dept_name, location) VALUES (30, 'Payroll',  'Hyderabad');
+
+1 row created.
+
+SQL> INSERT INTO dept (dept_id, dept_name, location) VALUES (40, 'Sales',    'Mumbai');
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO emp VALUES (1001, 'Sambit',   'Developer',     15500, 10);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1002, 'Santosh',  'Senior Dev',    35000, 10);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1003, 'Manoj',    'HR Executive',  17000, 20);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1004, 'Rakesh',   'Payroll Exec',  37000, 30);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1005, 'Hina',     'Developer',     42000, 10);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1006, 'Bikash',   'HR Executive',  15000, 20);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1007, 'Priya',    'HR Manager',    67000, 20);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1008, 'Preety',   'Payroll Lead',  67000, 30);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1009, 'Priyanka', 'Payroll Mgr',   55000, 30);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1010, 'Anurag',   'Sales Exec',    15000, 40);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1011, 'Rishav',   'Sales Lead',    55000, 40);
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (1012, 'Ram',      'Sales Exec',    12000, 40);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> select * from dept;
+
+   DEPT_ID DEPT_NAME                      LOCATION
+---------- ------------------------------ ------------------------------
+        10 IT                             Chennai
+        20 HR                             Bangalore
+        30 Payroll                        Hyderabad
+        40 Sales                          Mumbai
+
+SQL> select * from emp;
+
+    EMP_ID EMP_NAME                       JOB                                SALARY    DEPT_ID
+---------- ------------------------------ ------------------------------ ---------- ----------
+      1001 Sambit                         Developer                           15500         10
+      1002 Santosh                        Senior Dev                          35000         10
+      1003 Manoj                          HR Executive                        17000         20
+      1004 Rakesh                         Payroll Exec                        37000         30
+      1005 Hina                           Developer                           42000         10
+      1006 Bikash                         HR Executive                        15000         20
+      1007 Priya                          HR Manager                          67000         20
+      1008 Preety                         Payroll Lead                        67000         30
+      1009 Priyanka                       Payroll Mgr                         55000         30
+      1010 Anurag                         Sales Exec                          15000         40
+      1011 Rishav                         Sales Lead                          55000         40
+
+    EMP_ID EMP_NAME                       JOB                                SALARY    DEPT_ID
+---------- ------------------------------ ------------------------------ ---------- ----------
+      1012 Ram                            Sales Exec                          12000         40
+
+12 rows selected.
+
+SQL> CREATE OR REPLACE VIEW vw_emp_dept AS
+  2  select e.emp_id,e.emp_name,e.job,e.salary,d.dept_name,d.location from emp e join dept d on e.dept_id=d.dept_id;
+
+View created.
+
+SQL> SELECT * FROM VE_EMP_DEPT ORDER BY DEPT_NAME,SALARY DESC;
+SELECT * FROM VE_EMP_DEPT ORDER BY DEPT_NAME,SALARY DESC
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT * FROM VW_EMP_DEPT ORDER BY DEPT_NAME,SALARY DESC;
+
+    EMP_ID EMP_NAME                       JOB                                SALARY DEPT_NAME                      LOCATION
+---------- ------------------------------ ------------------------------ ---------- ------------------------------ ------------------------------
+      1007 Priya                          HR Manager                          67000 HR                             Bangalore
+      1003 Manoj                          HR Executive                        17000 HR                             Bangalore
+      1006 Bikash                         HR Executive                        15000 HR                             Bangalore
+      1005 Hina                           Developer                           42000 IT                             Chennai
+      1002 Santosh                        Senior Dev                          35000 IT                             Chennai
+      1001 Sambit                         Developer                           15500 IT                             Chennai
+      1008 Preety                         Payroll Lead                        67000 Payroll                        Hyderabad
+      1009 Priyanka                       Payroll Mgr                         55000 Payroll                        Hyderabad
+      1004 Rakesh                         Payroll Exec                        37000 Payroll                        Hyderabad
+      1011 Rishav                         Sales Lead                          55000 Sales                          Mumbai
+      1010 Anurag                         Sales Exec                          15000 Sales                          Mumbai
+
+    EMP_ID EMP_NAME                       JOB                                SALARY DEPT_NAME                      LOCATION
+---------- ------------------------------ ------------------------------ ---------- ------------------------------ ------------------------------
+      1012 Ram                            Sales Exec                          12000 Sales                          Mumbai
+
+12 rows selected.
+
+SQL> INSERT VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'CHENNAI');
+INSERT VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'CHENNAI')
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> INSERT INTO VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'CHENNAI');
+INSERT INTO VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'CHENNAI')
+                                                                        *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'SALES','CHENNAI');
+INSERT INTO VW_EMP_DEPT (EMP_ID,EMP_NAME,JOB,SALARY,DEPT_NAME,LOCATION) VALUES (1013,'TINA','DATA ENGINEER',18000,'SALES','CHENNAI')
+                                                    *
+ERROR at line 1:
+ORA-01776: cannot modify more than one base table through a join view
+
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        78000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1012 Ram                  HR                        12000
+       1013 Kiran                IT
+
+13 rows selected.
+
+SQL> SELECT VEW_NAME FROM USER_NAME ORDER BY VIEW_NAME;
+SELECT VEW_NAME FROM USER_NAME ORDER BY VIEW_NAME
+                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT VIEW_NAME FROM USER_NAME ORDER BY VIEW_NAME;
+SELECT VIEW_NAME FROM USER_NAME ORDER BY VIEW_NAME
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT VIEW_NAME FROM USER_VIEWS ORDER BY VIEW_NAME;
+
+VIEW_NAME
+--------------------------------------------------------------------------------------------------------------------------------
+MVIEW_EVALUATIONS
+MVIEW_EXCEPTIONS
+MVIEW_FILTER
+MVIEW_FILTERINSTANCE
+MVIEW_LOG
+MVIEW_RECOMMENDATIONS
+MVIEW_WORKLOAD
+PRODUCT_PRIVS
+SCHEDULER_JOB_ARGS
+SCHEDULER_PROGRAM_ARGS
+VW_EMP
+
+VIEW_NAME
+--------------------------------------------------------------------------------------------------------------------------------
+VW_EMP_DEPT
+
+12 rows selected.
+
+SQL> SET LOGN 100000;
+SP2-0158: unknown SET option "LOGN"
+SQL> SET LONG 100000;
+SQL> SET LINESIZE 200;
+SQL> SET PAGESIZE 200;
+SQL> SELECT TEXT FROM USER_VIEWS WHERE VIEW_NAME=VW_EMP;
+SELECT TEXT FROM USER_VIEWS WHERE VIEW_NAME=VW_EMP
+                                            *
+ERROR at line 1:
+ORA-00904: "VW_EMP": invalid identifier
+
+
+SQL> SELECT TEXT FROM USER_VIEWS WHERE VIEW_NAME='VW_EMP';
+
+TEXT
+--------------------------------------------------------------------------------
+SELECT EMPLOYEE_ID,NAME,DEPARTMENT FROM EMPLOYEES
+
+SQL> INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT) VALUES (1014,'SRUTI','HR');
+
+1 row created.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        78000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+       1012 Ram                  HR                        12000
+       1013 Kiran                IT
+       1014 SRUTI                HR
+
+14 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID NAME                 DEPARTMENT               SALARY
+----------- -------------------- -------------------- ----------
+       1001 Sambit               IT                        15500
+       1002 Santosh              IT                        35000
+       1003 Manoj                HR                        78000
+       1004 Rakesh               Payroll                   37000
+       1005 Hina                 IT                        42000
+       1006 Bikash               HR                        15000
+       1007 Priya                HR                        67000
+       1008 Preety               Payroll                   67000
+       1009 Priyanka             Payroll                   55000
+       1010 Anurag               Payroll                   15000
+       1011 Rishav               HR                        55000
+       1012 Ram                  HR                        12000
+       1013 Kiran                IT
+
+13 rows selected.
+
+SQL> CREATE OR REPLACE TRIGGER DEMO_INSTEAD
+  2  INSTEAD OF INSERT
+  3  ON VW_EMP
+  4  BEGIN
+  5  DBMS_OUTPUT.PUTLINE('YOU DON'T HAVE PERMISSION TO INSERT THROUGH VIEW');
+  6  END;
+  7  /
+
+Warning: Trigger created with compilation errors.
+
+SQL>  CREATE OR REPLACE TRIGGER DEMO_INSTEAD
+  2     INSTEAD OF INSERT
+  3    ON VW_EMP
+  4    BEGIN
+  5    DBMS_OUTPUT.PUT_LINE('YOU DON'T HAVE PERMISSION TO INSERT THROUGH VIEW');
+  6      END;
+  7   /
+
+Warning: Trigger created with compilation errors.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> CREATE OR REPLACE TRIGGER demo_instead
+  2  INSTEAD OF INSERT ON vw_emp
+  3  FOR EACH ROW
+  4  BEGIN
+  5    DBMS_OUTPUT.PUT_LINE('YOU DON''T HAVE PERMISSION TO INSERT THROUGH VIEW');
+  6    RAISE_APPLICATION_ERROR(-20051, 'Insert not allowed through VW_EMP');
+  7  END;
+  8  /
+
+Trigger created.
+
+SQL>  INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT) VALUES (1015,'KISAN','IT');
+YOU DON'T HAVE PERMISSION TO INSERT THROUGH VIEW
+ INSERT INTO VW_EMP (EMPLOYEE_ID,NAME,DEPARTMENT) VALUES (1015,'KISAN','IT')
+             *
+ERROR at line 1:
+ORA-20051: Insert not allowed through VW_EMP
+ORA-06512: at "SYSTEM.DEMO_INSTEAD", line 3
+ORA-04088: error during execution of trigger 'SYSTEM.DEMO_INSTEAD'
+
+
+SQL>    Create table emp_test
+  2  (
+  3  emp_id number,
+  4  First_name varchar2(100)
+  5  );
+
+Table created.
+
+SQL> create or replace trigger comp_test
+  2  for insert or update or delete
+  3  on emp_test
+  4  compound trigger
+  5  before statement is
+  6        begin
+  7        DBMS_OUTPUT.PUT_LINE('1');
+  8        end  before statement;
+  9
+ 10        before each row is
+ 11        begin
+ 12        DBMS_OUTPUT.PUT_LINE('2');
+ 13        end before each row;
+ 14
+ 15        after each row is
+ 16        begin
+ 17        DBMS_OUTPUT.PUT_LINE('3');
+ 18        end after each row;
+ 19
+ 20        after statement is
+ 21        begin
+ 22        DBMS_OUTPUT.PUT_LINE('4');
+ 23        end after statement;
+ 24  end;
+ 25  /
+
+Trigger created.
+
+SQL> INSERT INTO EMP_TEST VALUES (1,'TESTNAME 1');
+1
+2
+3
+4
+
+1 row created.
+
+SQL>
