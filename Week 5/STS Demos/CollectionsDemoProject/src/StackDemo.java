@@ -15,6 +15,8 @@ public class StackDemo {
 	     System.out.println(s);
 	     System.out.println(s.peek());
 	     System.out.println(s);
+	     s.clear();
+	     System.out.println("after Clear "+s.isEmpty());
 	}
 
 }

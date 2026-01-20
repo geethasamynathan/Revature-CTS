@@ -3,56 +3,78 @@ import java.util.*;
 public class VectorDemo {
 
 	public static void main(String[] args) {
-		        // 1) Create Vector (Ticket IDs)
-		        Vector<String> tickets = new Vector<>();
 
-		        // add() - Add new tickets (like new customer requests)
-		        tickets.add("TKT1001");
-		        tickets.add("TKT1002");
-		        tickets.add("TKT1003");
+		/// Vector is exactly similar to ArrayList but ArrayList is not a synchronized
+		/// //class where Vector is a synchronized class. Vector is also called
+		/// legacy class
 
-		        System.out.println("Initial Tickets: " + tickets);
+		// 1) Create Vector (Ticket IDs)
+		Vector<String> tickets = new Vector<>();
 
-		        // add(index, element) - Insert high priority ticket at a specific position
-		        tickets.add(1, "TKT9999"); // high priority inserted at index 1
-		        System.out.println("After inserting high priority: " + tickets);
+		// add() - Add new tickets (like new customer requests)
+		tickets.add("TKT1001");
+		tickets.add("TKT1002");
+		tickets.add("TKT1003");
+//		tickets.add("TKT1004");
+//		tickets.add("TKT1005");
+//		tickets.add("TKT1006");
+//		tickets.add("TKT1007");
+//		tickets.add("TKT1008");
+//		tickets.add("TKT1009");
+//		tickets.add("TKT10010");
 
-		        // size() - Total number of tickets
-		        System.out.println("Total tickets: " + tickets.size());
+		System.out.println("Initial Tickets: " + tickets);
 
-		        // contains() - Check if a ticket exists
-		        System.out.println("Contains TKT1002? " + tickets.contains("TKT1002"));
+		// add(index, element) - Insert high priority ticket at a specific position
+		tickets.add(1, "TKT9999"); // high priority inserted at index 1
+		System.out.println("After inserting high priority: " + tickets);
 
-		        // get(index) - Fetch ticket at a position (ticket assignment)
-		        System.out.println("Ticket at index 2: " + tickets.get(2));
+//		        // size() - Total number of tickets
+		System.out.println("Total tickets: " + tickets.size());
+//
+//		        // contains() - Check if a ticket exists
+		System.out.println("Contains TKT1002? " + tickets.contains("TKT1002"));
 
-		        // set(index, element) - Update ticket ID (example: ticket got merged/renamed)
-		        tickets.set(2, "TKT2002");
-		        System.out.println("After updating index 2: " + tickets);
+		// get(index) - Fetch ticket at a position (ticket assignment)
+		System.out.println("Ticket at index 2: " + tickets.get(2));
 
-		        // indexOf() - Find position of a ticket
-		        System.out.println("Index of TKT1003: " + tickets.indexOf("TKT1003"));
+		// set(index, element) - Update ticket ID (example: ticket got merged/renamed)
+		tickets.set(2, "TKT2002");
+//		        System.out.println("After updating index 2: " + tickets);
 
-		        // remove(element) - Remove ticket if resolved
-		        tickets.remove("TKT1001");
-		        System.out.println("After resolving TKT1001: " + tickets);
+//		        // indexOf() - Find position of a ticket
+		System.out.println("Index of TKT1003: " + tickets.indexOf("TKT1003"));
 
-		        // remove(index) - Remove ticket at specific index
-		        tickets.remove(0);
-		        System.out.println("After removing ticket at index 0: " + tickets);
+		// remove(element) - Remove ticket if resolved
+		tickets.remove("TKT1001");
+		System.out.println("After resolving TKT1001: " + tickets);
 
-		        // addAll(collection) - Add tickets from another department/team
-		        Vector<String> escalatedTickets = new Vector<>();
-		        escalatedTickets.add("ESC5001");
-		        escalatedTickets.add("ESC5002");
+		// remove(index) - Remove ticket at specific index
+		tickets.remove(0);
+		System.out.println("After removing ticket at index 0: " + tickets);
 
-		        tickets.addAll(escalatedTickets);
-		        System.out.println("After adding escalated tickets: " + tickets);
+		// addAll(collection) - Add tickets from another department/team
+		Vector<String> escalatedTickets = new Vector<>();
+		escalatedTickets.add("ESC5001");
+		escalatedTickets.add("ESC5002");
 
-		        // addAll(index, collection) - Insert tickets at a specific position
-		        Vector<String> urgentTickets = new Vector<>();
-		        urgentTickets.add("URG7001");
-		        urgentTickets.add("URG7002");
+		tickets.addAll(escalatedTickets);
+		System.out.println("After adding escalated tickets: " + tickets);
+
+		// addAll(index, collection) - Insert tickets at a specific position
+		Vector<String> urgentTickets = new Vector<>();
+		urgentTickets.add("URG7001");
+		urgentTickets.add("URG7002");
+		urgentTickets.add("URG7003");
+		urgentTickets.add("URG7004");
+		urgentTickets.add("URG7005");
+//		urgentTickets.add("URG7006");
+//		urgentTickets.add("URG7007");
+//		urgentTickets.add("URG7008");
+//		urgentTickets.add("URG7009");
+//		urgentTickets.add("URG7010");
+//		urgentTickets.add("URG7011");
+//		urgentTickets.add("URG7012");
 
 		        tickets.addAll(1, urgentTickets);
 		        System.out.println("After inserting urgent tickets at index 1: " + tickets);
@@ -89,7 +111,7 @@ public class VectorDemo {
 		        System.out.println("\nCapacity (internal size): " + tickets.capacity());
 
 		        // ensureCapacity(min) - Pre-allocate to avoid frequent resizing (performance)
-		        tickets.ensureCapacity(20);
+		        //tickets.ensureCapacity(20);
 		        System.out.println("Capacity after ensureCapacity(20): " + tickets.capacity());
 
 		        // trimToSize() - Reduce unused capacity (memory optimization)
@@ -100,10 +122,5 @@ public class VectorDemo {
 		        tickets.clear();
 		        System.out.println("\nAfter clear(): " + tickets);
 		        System.out.println("Is empty after clear? " + tickets.isEmpty());
-		    }
-		}
-
-
-	
-
-
+	}
+}
