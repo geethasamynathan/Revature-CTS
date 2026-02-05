@@ -1,0 +1,3 @@
+2026-02-05 12:19:28.031622+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EMPLOYEES_PROFILES" not found; SQL statement:
+SELECT * FROM EMPLOYEES_PROFILES [42102-240]

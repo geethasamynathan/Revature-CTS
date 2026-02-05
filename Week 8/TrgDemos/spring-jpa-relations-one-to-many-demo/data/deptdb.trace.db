@@ -1,0 +1,6 @@
+2026-02-05 12:37:29.641054+05:30 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]SEELCT * FROM DEPARTMENTS"; expected "SAVEPOINT, SCRIPT, SHUTDOWN"; SQL statement:
+SEELCT * FROM DEPARTMENTS [42001-240]
+2026-02-05 12:38:50.867622+05:30 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EMPLLOYEES" not found; SQL statement:
+SELECT * FROM EMPLLOYEES [42102-240]
