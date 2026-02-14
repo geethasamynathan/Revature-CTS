@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::section}, 'Products')}">
+
+<section class="card">
+  <div class="row" style="justify-content:space-between;">
+    <div>
+      <h2 style="margin:0;">Products</h2>
+      <div class="muted">Manage your products (list, edit, stock, delete)</div>
+    </div>
+    <a class="btn btn-primary" th:href="@{/products/new}">+ Add Product</a>
+  </div>
+
+  <div style="margin-top:14px;">
+    <table>
+      <thead>
+      <tr>
+        <th style="width:80px;">ID</th>
+        <th>Name</th>
+        <th style="width:140px;">Price</th>
+        <th style="width:120px;">Stock</th>
+        <th style="width:320px;">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="p : ${products}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.price}"></td>
+        <td th:text="${p.stock}"></td>
+        <td>
+          <a class="btn" th:href="@{/products/{id}(id=${p.id})}">Details</a>
+          <a class="btn" th:href="@{/products/{id}/edit(id=${p.id})}">Edit</a>
+          <a class="btn" th:href="@{/products/{id}/stock(id=${p.id})}">Stock</a>
+
+          <form th:action="@{/products/{id}/delete(id=${p.id})}"
+                method="post" style="display:inline;">
+            <button class="btn btn-danger" type="submit"
+                    onclick="return confirm('Delete this product?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</html>

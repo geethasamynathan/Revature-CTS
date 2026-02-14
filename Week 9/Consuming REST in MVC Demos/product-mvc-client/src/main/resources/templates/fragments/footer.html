@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <footer class="footer" th:fragment="siteFooter">
+    <div class="container" style="padding:14px 16px;">
+      <div>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Product Portal</div>
+      <div class="muted">Header / Navbar / Footer are shared — only main content changes.</div>
+    </div>
+  </footer>
+</body>
+</html>

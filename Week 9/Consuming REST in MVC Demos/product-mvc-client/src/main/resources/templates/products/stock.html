@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::section}, 'Update Stock')}">
+
+<section class="card">
+  <h2 style="margin-top:0;">Update Stock</h2>
+
+  <p>
+    <b>Product:</b> <span th:text="${p.name}"></span><br>
+    <b>Current Stock:</b> <span th:text="${p.stock}"></span>
+  </p>
+
+  <form th:action="@{/products/{id}/stock(id=${p.id})}" method="post">
+    <label>New Stock</label>
+    <input type="number" name="stock" required placeholder="Eg: 100">
+
+    <div class="row" style="margin-top:16px;">
+      <button class="btn btn-primary" type="submit">Update</button>
+      <a class="btn" th:href="@{/products}">Back</a>
+    </div>
+  </form>
+</section>
+</html>

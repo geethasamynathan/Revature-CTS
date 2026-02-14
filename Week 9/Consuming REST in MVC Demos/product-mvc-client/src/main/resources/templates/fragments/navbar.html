@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <nav class="nav" th:fragment="siteNav">
+    <div class="container">
+      <div class="nav-links">
+        <a th:href="@{/products}">Products</a>
+        <a th:href="@{/products/new}">Create</a>
+        <!-- add your future modules here -->
+        <a href="#" class="muted" onclick="return false;">Reports</a>
+        <a href="#" class="muted" onclick="return false;">Settings</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::section}, 'Create Product')}">
+
+<section class="card">
+  <h2 style="margin-top:0;">Create Product</h2>
+  <p class="muted">Fill the details and save.</p>
+
+  <form th:action="@{/products}" th:object="${product}" method="post">
+
+    <label>Name</label>
+    <input type="text" th:field="*{name}" placeholder="Eg: iPhone 15">
+    <div class="err" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <label>Price</label>
+    <input type="number" step="0.01" th:field="*{price}" placeholder="Eg: 79999.00">
+    <div class="err" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+
+    <label>Stock</label>
+    <input type="number" th:field="*{stock}" placeholder="Eg: 50">
+    <div class="err" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></div>
+
+    <div class="row" style="margin-top:16px;">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a class="btn" th:href="@{/products}">Back</a>
+    </div>
+  </form>
+</section>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::section}, 'Product Details')}">
+
+<section class="card">
+  <div class="row" style="justify-content:space-between;">
+    <div>
+      <h2 style="margin:0;">Product Details</h2>
+      <div class="muted">View full information.</div>
+    </div>
+    <div class="row">
+      <a class="btn" th:href="@{/products}">Back</a>
+      <a class="btn btn-primary" th:href="@{/products/{id}/edit(id=${p.id})}">Edit</a>
+      <a class="btn" th:href="@{/products/{id}/stock(id=${p.id})}">Update Stock</a>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <p><b>ID:</b> <span th:text="${p.id}"></span></p>
+    <p><b>Name:</b> <span th:text="${p.name}"></span></p>
+    <p><b>Price:</b> <span th:text="${p.price}"></span></p>
+    <p><b>Stock:</b> <span th:text="${p.stock}"></span></p>
+  </div>
+</section>
+</html>
