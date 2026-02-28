@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Application Debugging using IntelliJ IDEA - Notes</title>
+  <style>
+    :root{--bg:#0b1020;--card:#121a33;--text:#e8ecff;--muted:#aab3e6;--accent:#7aa2ff;--good:#3ddc97;--warn:#ffcc66;--bad:#ff6b6b;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#070b18, #0b1020 35%, #0b1020); color:var(--text);}
+    header{padding:28px 18px 12px; max-width:1100px; margin:auto;}
+    h1{margin:0 0 6px;font-size:28px;}
+    .sub{color:var(--muted);line-height:1.45}
+    main{max-width:1100px;margin:0 auto;padding:0 18px 40px;}
+    .grid{display:grid;grid-template-columns:1fr; gap:14px;}
+    @media (min-width: 980px){ .grid{grid-template-columns: 1.1fr 0.9fr;} }
+    .card{background:rgba(18,26,51,.9); border:1px solid rgba(122,162,255,.18); border-radius:14px; padding:16px 16px 14px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
+    h2{margin:0 0 10px; font-size:20px;}
+    h3{margin:14px 0 8px; font-size:16px; color:#d6dbff;}
+    ul{margin:8px 0 0 18px; color:var(--text); line-height:1.6;}
+    li{margin:4px 0;}
+    code, pre{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;}
+    pre{background:#070b18;border:1px solid rgba(122,162,255,.18); padding:12px; border-radius:12px; overflow:auto; line-height:1.45;}
+    .tag{display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; margin-right:6px; border:1px solid rgba(255,255,255,.14); color:var(--muted);}
+    .callout{border-left:4px solid; padding:10px 12px; border-radius:12px; background:rgba(7,11,24,.6); margin:10px 0;}
+    .note{border-left-color:var(--accent);}
+    .tip{border-left-color:var(--good);}
+    .warn{border-left-color:var(--warn);}
+    .danger{border-left-color:var(--bad);}
+    .kbd{border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); padding:1px 6px; border-radius:6px; font-size:12px;}
+    .twoCol{display:grid; grid-template-columns:1fr; gap:10px;}
+    @media (min-width: 980px){ .twoCol{grid-template-columns:1fr 1fr;} }
+    footer{max-width:1100px;margin:0 auto;padding:0 18px 26px;color:var(--muted);font-size:13px;}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Application Debugging using IntelliJ IDEA (Beginner → Advanced Notes)</h1>
+  <div class="sub">
+    <span class="tag">Java</span>
+    <span class="tag">IntelliJ IDEA</span>
+    <span class="tag">Breakpoints</span>
+    <span class="tag">Step Into/Over/Out</span>
+    <span class="tag">Advanced Debugging</span>
+    <p style="margin:10px 0 0">
+      These notes explain <b>how to debug a Java application in IntelliJ IDEA</b> using a real mini project example
+      (EmployeeApp → Service → Repository). You’ll learn what each debug action means, when to use it, and how to debug like a pro.
+    </p>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card">
+      <h2>1) What is Debugging?</h2>
+      <p class="sub">
+        Debugging is the process of <b>finding and fixing issues</b> by running the program in a controlled way and checking values
+        (variables/objects) step-by-step.
+      </p>
+
+      <div class="callout note">
+        <b>Key idea:</b> A debugger lets you <b>pause</b> the program at specific lines and inspect the “current state”
+        (variables, call stack, objects in memory).
+      </div>
+
+      <h3>What you can do in IntelliJ Debugger</h3>
+      <ul>
+        <li>Pause execution at a line (<b>breakpoint</b>)</li>
+        <li>Run line-by-line (<b>Step Over/Into/Out</b>)</li>
+        <li>Check variables in the <b>Variables</b> panel</li>
+        <li>Use <b>Evaluate Expression</b> to run small expressions without changing code</li>
+        <li>Set <b>Conditional Breakpoints</b> and <b>Exception Breakpoints</b></li>
+        <li>Debug multiple threads and inspect the <b>Call Stack</b></li>
+      </ul>
+    </section>
+
+    <aside class="card">
+      <h2>Quick Shortcut Cheat Sheet</h2>
+      <div class="twoCol">
+        <div>
+          <h3>Run & Debug</h3>
+          <ul>
+            <li><b>Debug</b>: <span class="kbd">Shift</span> + <span class="kbd">F9</span></li>
+            <li><b>Run</b>: <span class="kbd">Shift</span> + <span class="kbd">F10</span></li>
+            <li><b>Stop</b>: <span class="kbd">Ctrl</span> + <span class="kbd">F2</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Stepping</h3>
+          <ul>
+            <li><b>Step Over</b>: <span class="kbd">F8</span></li>
+            <li><b>Step Into</b>: <span class="kbd">F7</span></li>
+            <li><b>Step Out</b>: <span class="kbd">Shift</span> + <span class="kbd">F8</span></li>
+            <li><b>Resume</b>: <span class="kbd">F9</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <b>Pro tip:</b> If shortcuts differ (Mac/Linux), open: <b>Settings → Keymap</b> and search “Step Over”, “Step Into”, etc.
+      </div>
+    </aside>
+  </div>
+
+  <section class="card" style="margin-top:14px">
+    <h2>2) Getting Started: Debug an Application in IntelliJ</h2>
+
+    <h3>Step A — Place a Breakpoint</h3>
+    <ul>
+      <li>Open the file you want to debug (example: <code>EmployeeApp.java</code>).</li>
+      <li>Click on the <b>left gutter</b> (left side of line numbers) to add a red dot.</li>
+      <li>This red dot = <b>Breakpoint</b>.</li>
+    </ul>
+
+    <h3>Step B — Start Debug Mode</h3>
+    <ul>
+      <li>Right-click your main class → <b>Debug</b></li>
+      <li>OR use <span class="kbd">Shift</span> + <span class="kbd">F9</span></li>
+    </ul>
+
+    <h3>Step C — Understand the Debug Window</h3>
+    <ul>
+      <li><b>Threads</b>: shows running threads (usually “main” for a simple app)</li>
+      <li><b>Frames / Call Stack</b>: shows how you reached current line (which methods called which)</li>
+      <li><b>Variables</b>: shows values of local variables, parameters, and fields</li>
+      <li><b>Console</b>: standard output and logs</li>
+    </ul>
+
+    <div class="callout note">
+      <b>Important:</b> When the program pauses on a breakpoint, it means the program state is frozen at that exact moment,
+      and you can inspect everything safely.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>3) Basic Debugging Techniques</h2>
+
+    <h3>3.1 Breakpoints (Debug Points)</h3>
+    <p class="sub">
+      A breakpoint pauses the program <b>before executing that line</b>. This lets you see what values exist right now.
+    </p>
+
+    <h3>Where to place breakpoints (using your Employee project)</h3>
+    <ul>
+      <li><b>At the start of main()</b> to inspect initial values like <code>args</code> and logger configuration.</li>
+      <li><b>Before service calls</b> to capture input data.</li>
+      <li><b>Inside service/repository methods</b> to see how data changes.</li>
+    </ul>
+
+    <div class="callout tip">
+      <b>Suggested breakpoints for your flow:</b><br/>
+      1) In <code>EmployeeApp.main()</code> at the line that logs “Log4j2 is working…”, and at <code>List&lt;Employee&gt; employees = service.getAllEmployees();</code><br/>
+      2) In <code>EmployeeServiceImplementation.addEmployee()</code> on <code>employeeRepository.save(employee);</code><br/>
+      3) In <code>EmployeeRepositoryImpl.save()</code> on <code>db.put(employee.getId(), employee);</code><br/>
+      This shows how the object flows <b>Main → Service → Repository</b>.
+    </div>
+
+    <h3>3.2 Step Over vs Step Into vs Step Out</h3>
+
+    <div class="twoCol">
+      <div>
+        <h3>✅ Step Over (F8)</h3>
+        <p class="sub">
+          Executes the current line and moves to the next line in the <b>same method</b>.
+          If the line calls another method, it runs that method <b>without entering</b> it.
+        </p>
+        <div class="callout note">
+          Use Step Over when you trust the called method and you only want to move forward quickly.
+        </div>
+      </div>
+      <div>
+        <h3>✅ Step Into (F7)</h3>
+        <p class="sub">
+          Enters the method that is being called on the current line, so you can debug inside it.
+        </p>
+        <div class="callout note">
+          Use Step Into when you suspect a bug is inside the called method (service/repository).
+        </div>
+      </div>
+    </div>
+
+    <h3>✅ Step Out (Shift + F8)</h3>
+    <p class="sub">
+      Runs the remaining lines of the current method and pauses when you return back to the caller.
+      Useful when you entered a method but you don’t want to step through every line.
+    </p>
+
+    <div class="callout warn">
+      <b>Common fresher mistake:</b> repeatedly using Step Into and getting stuck inside JDK/library code.
+      Use <b>Step Over</b> or <b>Smart Step Into</b> (see Advanced section) to avoid that.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>4) Debugging with Your Actual Code (EmployeeApp Example)</h2>
+
+    <h3>4.1 Understand the flow</h3>
+    <p class="sub">Your main method does:</p>
+    <ul>
+      <li>Create Repository: <code>new EmployeeRepositoryImpl()</code></li>
+      <li>Create Service: <code>new EmployeeServiceImplementation(repository)</code></li>
+      <li>Add Employees: <code>service.addEmployee(new Employee(...))</code></li>
+      <li>Fetch list: <code>List&lt;Employee&gt; employees = service.getAllEmployees();</code></li>
+      <li>Find by id, delete, print again</li>
+    </ul>
+
+    <h3>4.2 “How to see the value BEFORE calling service, and AFTER calling service?”</h3>
+    <ol style="line-height:1.6">
+      <li><b>Breakpoint 1:</b> put breakpoint on the line <code>service.addEmployee(new Employee(1, ...))</code> in <code>EmployeeApp</code>.</li>
+      <li>When paused, look at <b>Variables</b>:
+        <ul>
+          <li><code>service</code> → expand it → confirm <code>employeeRepository</code> is not null.</li>
+          <li>Hover your mouse on <code>service</code> or use <b>Evaluate</b>.</li>
+        </ul>
+      </li>
+      <li>Now press <b>Step Into (F7)</b> to enter <code>addEmployee()</code>.</li>
+      <li><b>Breakpoint 2:</b> inside <code>addEmployee()</code>, pause on <code>employeeRepository.save(employee);</code></li>
+      <li>Inspect:
+        <ul>
+          <li><code>employee</code> parameter → expand → see id/name/department/salary.</li>
+          <li>Check validations: if salary <= 0, it throws exception.</li>
+        </ul>
+      </li>
+      <li>Press <b>Step Into (F7)</b> again to enter repository <code>save()</code>.</li>
+      <li><b>Breakpoint 3:</b> on <code>db.put(employee.getId(), employee);</code></li>
+      <li>Inspect:
+        <ul>
+          <li>Expand <code>db</code> (HashMap) → before execution it may be empty.</li>
+          <li><b>Step Over</b> this line → now expand <code>db</code> again → you’ll see the new entry.</li>
+        </ul>
+      </li>
+      <li>Now press <b>Step Out (Shift+F8)</b> to return to service, then Step Out again to return to main.</li>
+      <li>Repeat for next employees and you’ll see how the in-memory DB grows.</li>
+    </ol>
+
+    <div class="callout tip">
+      <b>Best place to verify “list after service call”:</b><br/>
+      Put a breakpoint on <code>List&lt;Employee&gt; employees = service.getAllEmployees();</code> in main.
+      Then use <b>Step Over</b> and expand <code>employees</code> in Variables. You’ll see the full list.
+    </div>
+
+    <h3>4.3 Example: Debug “Division by zero” using Calculator</h3>
+    <p class="sub">
+      In your Calculator class, <code>divide()</code> throws <code>ArithmeticException</code> when divisor is 0.
+      This is a perfect case to use an <b>Exception Breakpoint</b>.
+    </p>
+
+    <pre><code>// Calculator.divide()
+public double divide(final int a, final int b) {
+  if (b == 0) {
+    throw new ArithmeticException("Division by zero not allowed");
+  }
+  return (double) a / b;
+}</code></pre>
+
+    <div class="callout note">
+      <b>How to debug it:</b><br/>
+      1) Add an Exception Breakpoint for <code>java.lang.ArithmeticException</code><br/>
+      2) Run Debug<br/>
+      3) When exception occurs, IntelliJ pauses at the exact throw line.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>5) Advanced Debugging (What it means + How to do it)</h2>
+
+    <p class="sub">
+      “Advanced debugging” means using debugger features that help you debug faster in real projects:
+      large codebases, many conditions, multi-threading, hard-to-reproduce bugs, performance issues, etc.
+    </p>
+
+    <h3>5.1 Conditional Breakpoints</h3>
+    <ul>
+      <li>Stops only when a condition is true (example: stop only when employeeId == 2).</li>
+      <li><b>How:</b> Right-click breakpoint → add condition.</li>
+    </ul>
+    <pre><code>// Example condition (in EmployeeRepositoryImpl.save or service.addEmployee)
+employee.getId() == 2</code></pre>
+
+    <div class="callout tip">
+      Use this to avoid stopping 100 times inside loops.
+    </div>
+
+    <h3>5.2 Logpoints (Print without changing code)</h3>
+    <ul>
+      <li>A “breakpoint” that doesn’t stop. It just logs a message when hit.</li>
+      <li><b>How:</b> Right-click breakpoint → uncheck “Suspend” and enable “Log message”.</li>
+    </ul>
+    <div class="callout note">
+      This is amazing when you want to trace values but don’t want to add <code>System.out.println</code> everywhere.
+    </div>
+
+    <h3>5.3 Smart Step Into</h3>
+    <ul>
+      <li>If a line calls multiple methods, Smart Step Into lets you choose which one to enter.</li>
+      <li><b>How:</b> Use “Smart Step Into” from the Debug toolbar (shortcut varies by keymap).</li>
+    </ul>
+
+    <h3>5.4 Evaluate Expression & Watches</h3>
+    <ul>
+      <li><b>Evaluate Expression:</b> run any Java expression in the current context.</li>
+      <li><b>Watch:</b> keep an expression monitored as you step through code.</li>
+    </ul>
+    <pre><code>// Examples you can evaluate during debug in EmployeeApp:
+employees.size()
+service.getEmployeeById(2)
+repository.findAll()</code></pre>
+
+    <h3>5.5 Exception Breakpoints (Stop when an exception happens)</h3>
+    <ul>
+      <li>Stop on thrown exceptions like <code>NullPointerException</code>, <code>IllegalArgumentException</code>, etc.</li>
+      <li><b>How:</b> Breakpoints view → “+” → Java Exception Breakpoint.</li>
+      <li>You can also stop only on <b>uncaught exceptions</b>.</li>
+    </ul>
+
+    <h3>5.6 Drop Frame (Re-run a method without restarting)</h3>
+    <ul>
+      <li>Moves the execution back to the start of the current method (like “rewind”).</li>
+      <li><b>How:</b> In Call Stack → right-click frame → “Drop Frame”.</li>
+      <li>Useful when you want to rerun a method after changing a variable in debug.</li>
+    </ul>
+
+    <h3>5.7 Set Value (Change variable while paused)</h3>
+    <ul>
+      <li>Right-click a variable → “Set Value…”</li>
+      <li>Example: change salary from 0 to 50000 and continue.</li>
+    </ul>
+
+    <div class="callout warn">
+      <b>Warning:</b> Changing runtime values is for debugging only. Don’t treat it as a permanent fix.
+    </div>
+
+    <h3>5.8 Force Return / Throw Exception</h3>
+    <ul>
+      <li>Force a method to return a value immediately (useful for testing alternate paths).</li>
+      <li>Force-throw an exception to test error handling.</li>
+    </ul>
+
+    <h3>5.9 Debugging Collections and Objects (Deep inspection)</h3>
+    <ul>
+      <li>Expand objects (Employee) and collections (List/Map) in Variables.</li>
+      <li>Use “View as…” (if available) to render structures nicely.</li>
+      <li>For HashMap (your fake DB), expand keys/values to verify insertion and deletion.</li>
+    </ul>
+
+    <h3>5.10 Multi-thread Debugging</h3>
+    <ul>
+      <li>In complex apps, multiple threads run (web servers, async tasks).</li>
+      <li>Debugger shows thread list → you can pause/resume specific threads.</li>
+      <li>Use this to find race conditions or deadlocks.</li>
+    </ul>
+
+    <div class="callout note">
+      <b>In your current console app, mostly only the “main” thread runs</b>, so thread complexity is low.
+      But these skills matter for Spring Boot apps.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>6) Debug Like a Corporate Developer (Workflow)</h2>
+
+    <ol style="line-height:1.7">
+      <li><b>Reproduce the issue</b> (same input, same steps)</li>
+      <li><b>Pick the smallest entry point</b> (usually controller/main method)</li>
+      <li><b>Add 2–3 strategic breakpoints</b> (before call, inside call, after call)</li>
+      <li><b>Use Step Over</b> for normal flow, Step Into only when needed</li>
+      <li><b>Inspect values + call stack</b> to understand “how we reached here”</li>
+      <li><b>Add conditional breakpoints/logpoints</b> when loops or many calls exist</li>
+      <li><b>Use Evaluate/Watch</b> for quick checks without code change</li>
+      <li><b>Fix the root cause</b>, then rerun & confirm</li>
+    </ol>
+
+    <div class="callout tip">
+      <b>Gold rule:</b> Debugger is not only for errors. It is also for learning code flow and validating assumptions.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>7) Mini Practice Tasks (Hands-on)</h2>
+
+    <h3>Task 1 — Verify repository “db” grows</h3>
+    <ul>
+      <li>Add breakpoints at repository <code>save()</code> and <code>findAll()</code>.</li>
+      <li>After each add, inspect <code>db</code> size.</li>
+    </ul>
+
+    <h3>Task 2 — Debug validation in service</h3>
+    <ul>
+      <li>Temporarily change one employee salary to 0 in main and debug.</li>
+      <li>See which exception is thrown and where it is caught.</li>
+      <li>Observe logger output vs console output.</li>
+    </ul>
+
+    <h3>Task 3 — Conditional breakpoint</h3>
+    <ul>
+      <li>In service <code>addEmployee()</code>, add condition: <code>employee.getName().equals("Anusha")</code></li>
+      <li>Run debug: it will stop only for that employee.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p><b>Tip for your screenshot:</b> In the Debug tool window, expand <i>args</i> and static members; use the top input box
+    “Evaluate expression” to run quick checks like <code>employees.size()</code> once the list is created.</p>
+  <p>Prepared for: IntelliJ IDEA Java debugging (Fresher-friendly + corporate-ready)</p>
+</footer>
+</body>
+</html>

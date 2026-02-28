@@ -150,7 +150,7 @@ Configure:
 
 ---
 
-## 6) Quick Fresher Summary
+## 6)Summary
 - **Service Management = Managing IT services end-to-end with process + tool**
 - Ensures **tracking + priority + SLA + ownership + continuous improvement**
 - **Implemented by:** ITSM Process Owner + Tool Admin + Service Owners + Service Desk + L2/L3 Teams

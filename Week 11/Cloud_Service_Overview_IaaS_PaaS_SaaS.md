@@ -1,4 +1,4 @@
-# Cloud Service Overview for Freshers (IaaS, PaaS, SaaS)
+# Cloud Service Overview  (IaaS, PaaS, SaaS)
 
 ## What is Cloud (simple meaning)
 Cloud means **using computing resources over the internet** instead of buying and maintaining physical servers and software in your office/data center.
